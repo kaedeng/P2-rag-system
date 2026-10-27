@@ -2,3 +2,34 @@
 # origin is hand when you wrote the query yourself and claude when a model drafted it; at least 10 must be hand.
 # class is a word you choose, for example identifier, paraphrase or mixed as in the shared sets; scores are reported per class.
 # Lines that start with # are comments, so delete these lines or keep them, as you like.
+# hand: written by the student, verbatim; claude: drafted by Claude Code from reading the pages (eval/own/queries.tsv)
+h01	identifier	codegen lto	hand
+h02	identifier	target darwin	hand
+h03	identifier	rustdoc gen link to def	hand
+h04	paraphrase	where to put tests integration	hand
+h05	paraphrase	how to profile	hand
+h06	paraphrase	where to fuzz	hand
+h07	paraphrase	how to mark stable or unstable	hand
+h08	mixed	x.py test only one file	hand
+h09	mixed	--emit llvm IR	hand
+h10	mixed	git: submodule conflict	hand
+c01	identifier	ErrorGuaranteed	claude
+c02	identifier	-Z unpretty=hir-tree	claude
+c03	identifier	what does -Z treat-err-as-bug do	claude
+c04	identifier	EarlyBinder::instantiate_identity	claude
+c05	identifier	-C split-debuginfo=packed	claude
+c06	identifier	rustc --print native-static-libs	claude
+c07	identifier	x86_64-unknown-linux-none	claude
+c08	paraphrase	Why does the compiler accept calling a mutating method on a vector when one of the arguments reads that same vector's length?	claude
+c09	paraphrase	Before merging a risky compiler change, is there a way to try it against every published Rust package to see what stops working, and how long does that take?	claude
+c10	paraphrase	How do standard library functions make a crash report blame the line in my code that called them rather than a line inside their own body?	claude
+c11	paraphrase	My shipped binary still contains the folder on my laptop where I built it, including my username; can the compiler swap that out for something neutral?	claude
+c12	paraphrase	If my outer build tool already caps how many things run at once, does rustc respect that cap or pick its own number of threads?	claude
+c13	paraphrase	Is there a way to have the generated API reference show real call sites of each function, pulled from the sample programs bundled with my library?	claude
+c14	paraphrase	What order should the fields go in at the top of my project's manifest, and where does the one-line blurb about the project belong?	claude
+c15	mixed	#[cfg(bootstrap)] in a library the compiler depends on gives an unexpected cfg warning; what do I add to Cargo.toml to silence it?	claude
+c16	mixed	//@ add-minicore: which compiler flags does it force on the test?	claude
+c17	mixed	@rustbot: I rebased my PR after merge conflicts, how do I tell reviewers it's ready to look at again?	claude
+c18	mixed	--cap-lints: is that why I never see warnings from my dependencies when cargo builds them?	claude
+c19	mixed	avr-none: why do I still need avr-gcc installed if Rust already supports the target?	claude
+c20	mixed	standalone_crate: when should a doctest be kept out of the merged run in the 2024 edition?	claude
