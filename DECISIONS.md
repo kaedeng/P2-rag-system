@@ -26,7 +26,7 @@ Commit this answer before your first `uv run p2 score` on the own corpus.
 Git history then shows that the expectation came first, which is what lets it be wrong in a way that teaches you something.
 If you were surprised later, say so in prompt 4 or in EVAL.md; do not come back and rewrite this one.
 
-TODO: your answer to prompt 1.
+I chose the rust language docs (the language core itself) because I like the Rust language and use it frequently. I wanted to see whether or not having a rag system of the docs would improve model performance, since the standards of the language are pretty high. Id believe that hybrid woul perform the best since these docs are fairly long but only specific parts are relevant. I'd think that rerank might perform poorly since, once again, these docs are too long.
 
 ---
 
@@ -41,7 +41,7 @@ If you rejected the alternative without measuring it, say why that was a fair ca
 "There was no alternative" is not an answer.
 Find the fork.
 
-The fork was the RRF k value in `hybrid`. There was a default lab's value, 60, and a smaller k. We first picked 60 and chose it, but after benchmarking, switched to 10. the original was that a large k will average to a correct answer with some noise. with a lower k value (10), we measured that the MRR@10 was 0.587 vs the k=60's MRR@10 being 0.471. We chose 10 instead of 1 (despite k=1 having the best MRR at 0.668), because there was more risk of false confidence at k=1 for a very small difference (~0.08). This costs 0 `claude -p` calls, took 1 script to run, and 60 rerank calls (~790k input tokens). 
+The fork was the RRF k value in `hybrid`. There was a default lab's value, 60, and a smaller k. We first picked 60, but after benchmarking, switched to 10. the original was that a large k will average to a correct answer with some noise. with a lower k value (10), we measured that the k=10 minus k=60, MRR@10: +0.117, 95% paired interval [+0.037, +0.218], this excludes zero, MDD 0.135. Recall@10: +0.200 [+0.067, +0.358]. Another piece of data we got was that rerank went from 0.750 to 0.900 with no change to the reranker, We chose 10 instead of 1 (despite k=1 having the best MRR at 0.668), because there was more risk of false confidence at k=1 for a very small difference (k=1 minus k=10, MRR@10: +0.081 [+0.002, +0.175], MDD 0.130. Lower bound +0.002, recall@10: +0.000). Measuring costs 0 `claude -p` calls and took 1 script to run and switching costs 60 rerank calls (~790k input tokens). 
 
 ---
 
