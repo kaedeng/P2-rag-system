@@ -57,7 +57,7 @@ What did you do instead?
 If it genuinely never happened, say so plainly, and then say what you would have had to check in order to notice.
 Being honest here costs you far less than a story you cannot defend when you record your video.
 
-TODO: your answer to prompt 3.
+Claude advised for sticking with k=60 for RRF in hybrid, I overruled it for a lower k value after measuring. The measurement said that k=1 performed better
 
 ---
 
@@ -69,7 +69,7 @@ It could be a mean over a small query class, a difference whose interval include
 What would have to be true for you to trust it?
 Did you do anything to test it, and what did that show?
 
-TODO: your answer to prompt 4.
+My corpus' MRR was 0.85-0.88 on a very wide casting gold set. To make me trust this, I'd expect the same performance for the systems under it. I tested it and it showed how the rerank's performance lead flips.
 
 ---
 
@@ -80,4 +80,4 @@ One thing in your system, your corpus or your gold set that is not right, not fi
 What would you do next, and how would you find out whether it matters?
 Name the file, the query or the document where someone could look.
 
-TODO: your answer to prompt 5.
+passage() in p2/retrievers/rerank.py shows the first 300 words. For query h03, hybrid rank 2, rerank rank 10, page 5,280 words. 

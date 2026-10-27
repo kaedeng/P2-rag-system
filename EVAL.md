@@ -45,6 +45,7 @@ Scores per system.
 | dense | 0.558 | 0.562 | 0.480 |
 | hybrid | 0.817 | 0.587 | 0.588 |
 | rerank | 0.808 | 0.900 | 0.826 |
+| rerank_c10 | 0.817 | 0.900 | 0.822 |
 
 20 judged queries; nDCG uses binary labels; a random ranking of the 2,484 documents would get recall@10 near 0.004.
 <!-- p2:end shared-practice -->
@@ -66,6 +67,9 @@ The same scores per query class.
 | rerank | Recall@10 | 0.929 | 0.595 | 0.917 |
 | rerank | MRR@10 | 1.000 | 0.714 | 1.000 |
 | rerank | nDCG@10 | 0.933 | 0.626 | 0.936 |
+| rerank_c10 | Recall@10 | 1.000 | 0.548 | 0.917 |
+| rerank_c10 | MRR@10 | 1.000 | 0.714 | 1.000 |
+| rerank_c10 | nDCG@10 | 0.954 | 0.592 | 0.936 |
 <!-- p2:end shared-practice-classes -->
 
 Differences between every pair of systems, each with its paired interval and the minimum detectable difference.
@@ -91,8 +95,20 @@ Differences between every pair of systems, each with its paired interval and the
 | rerank minus hybrid | Recall@10 | -0.008 | [-0.075, +0.050] | 0.086 | not distinguishable |
 | rerank minus hybrid | MRR@10 | +0.313 | [+0.160, +0.478] | 0.232 | rerank higher |
 | rerank minus hybrid | nDCG@10 | +0.238 | [+0.126, +0.359] | 0.169 | rerank higher |
+| rerank_c10 minus bm25 | Recall@10 | +0.192 | [+0.050, +0.358] | 0.223 | rerank_c10 higher |
+| rerank_c10 minus bm25 | MRR@10 | +0.393 | [+0.200, +0.595] | 0.287 | rerank_c10 higher |
+| rerank_c10 minus bm25 | nDCG@10 | +0.303 | [+0.137, +0.478] | 0.247 | rerank_c10 higher |
+| rerank_c10 minus dense | Recall@10 | +0.258 | [+0.083, +0.450] | 0.270 | rerank_c10 higher |
+| rerank_c10 minus dense | MRR@10 | +0.338 | [+0.150, +0.533] | 0.273 | rerank_c10 higher |
+| rerank_c10 minus dense | nDCG@10 | +0.342 | [+0.174, +0.518] | 0.249 | rerank_c10 higher |
+| rerank_c10 minus hybrid | Recall@10 | +0.000 | [+0.000, +0.000] | - | identical on every query |
+| rerank_c10 minus hybrid | MRR@10 | +0.313 | [+0.160, +0.478] | 0.232 | rerank_c10 higher |
+| rerank_c10 minus hybrid | nDCG@10 | +0.234 | [+0.134, +0.343] | 0.153 | rerank_c10 higher |
+| rerank_c10 minus rerank | Recall@10 | +0.008 | [-0.050, +0.075] | 0.086 | not distinguishable |
+| rerank_c10 minus rerank | MRR@10 | +0.000 | [+0.000, +0.000] | - | identical on every query |
+| rerank_c10 minus rerank | nDCG@10 | -0.005 | [-0.037, +0.025] | 0.043 | not distinguishable |
 
-The interval is a paired bootstrap (10,000 resamples of the queries); MDD is the smallest difference this many queries detect 80% of the time.
+The interval is a paired bootstrap (10,000 resamples of the queries); MDD is the smallest difference this many queries detect 80% of the time. Two systems that score the same on every query have no interval to speak of, so their MDD is shown as -.
 <!-- p2:end shared-practice-pairs -->
 
 The 40 test queries have no answer key in this repo.
@@ -104,7 +120,10 @@ Which differences are distinguishable from zero and which are not?
 What is the minimum detectable difference at 20 queries, and what does that say about any gap smaller than it?
 Which claim from lecture 12 or 13 did your numbers support, and which did they leave open?
 
-TODO: write what the practice-query intervals let you claim.
+MRR@10 is distinguishable from zero.
+Not distinguishable is every pair from bm25, hybrid, dense. 
+The minimum detectable difference is roughly 0.19-0.41.
+Lecture 12's claim about how no retriever wins is supported by my numbers, ex. bm25 identifier recall 1.000, paraphrase 0.000; dense 0.214 and 0.595. One thing left open was whether hybrid beats either input, since those intervals include zero.
 
 ---
 
@@ -123,7 +142,19 @@ Then read three in-corpus answers that `uv run p2 verify` passed.
 For each one, open the cited chunk and say whether the quote really supports the claim next to it.
 The check proves a quote is a real piece of the chunk and cannot prove that it supports the claim, so this reading is the part only you can do.
 
-TODO: write your answer choices and your three-answer audit.
+The system answered was rerank because its the only one with a visible win over its firsts stage. the prompts/answer.txt was unchanged. the verified/declined share stayed the same.
+
+a01: 'Within how many minutes must a mine operator call MSHA after an accident that kills a miner?' \\
+Source: 'The operator shall immediately contact MSHA at once without delay and within 15 minutes at the toll-free number, 1-800-746-1553, once the operator knows or should know that an accident has occurred involving:' \\
+This supports the claim
+
+a02: 'What minimum incombustible content must the combined dust in an underground coal mine keep where no methane is present?'
+Source: 'Where rock dust is required to be applied, it shall be distributed upon the top, floor, and sides of all underground areas of a coal mine and maintained in such quantities that the incombustible content of the combined coal dust, rock dust, and other dust shall be not less than 80 percent. Where methane is present in any ventilating current, the percent of incombustible content of such combined dust shall be increased 0.4 percent for each 0.1 percent of methane.'
+This supports the claim
+
+a05: 'How many hours of training must a new underground miner receive before being assigned to work duties?'
+Source: '(a) Each new miner shall receive no less than 40 hours of training as prescribed in this section before such miner is assigned to work duties. Such training shall be conducted in conditions which as closely as practicable duplicate actual underground conditions, and approximately 8 hours of training shall be given at the minesite.'
+This supports the claim
 
 ---
 
@@ -135,7 +166,7 @@ What is it, where did it come from, how many documents and how many megabytes, a
 Name the one or two documents you were least sure about and what you decided.
 Say which of the allowed sources in the brief it comes from.
 
-TODO: describe your corpus and its license basis.
+Corpus is from the rust compiler documentation (rustc-dev-guide, rustc book, rustdoc book, style guide, from rust-lang/rust) from commit 41089d07a0a2afc16adfe28a760d94d73d7298a4 fetched with `scripts/fetch_rust_docs.py`. It is a 424 document corpus which is roughly 2.6 MB. The set has a median of 520 words, which is 69% larger than one chunk. The license and repo licence is MIT/Apache 2.0. We removed some licensing that was unknown.  
 
 ### The gold set
 
@@ -144,7 +175,7 @@ How did you decide that a document is relevant: write your relevance rule in two
 How did you find candidates (the systems' top 10, a keyword search, reading), and did you read every document before you labeled it?
 Your labels are binary (`rel` 1) unless you say otherwise: if you use graded labels, declare the scale here, for example 2 means the document answers the query fully and 1 means it helps.
 
-TODO: describe your gold set and your relevance rule.
+The set is 30 queries, 10 hand picked and 20 claude picked. there is 10 identifiers, 11 paraphrases, and 9 mixed. The rule was that the document must have either examples of the requested item, or the document's behavior is related to the requested item's behavior. We excluded files that were 0 lines long. The candidates wer echosen from a union of bm25, dense, and hybrid top 10 using `scripts/candidates.py`, keyword grep, and the page each draft was written from. three draft source pages (c11-13) were in no system's top 10.
 
 ---
 
@@ -266,7 +297,9 @@ Which differences are distinguishable and which are not, at your gold-set size?
 Do the `hand` queries and the `claude` queries tell the same story?
 Did your prediction in `DECISIONS.md` prompt 1 hold?
 
-TODO: write what your own-corpus intervals let you claim.
+Whats distinguishable is hybrid minus bm25 +0.101 [+0.026, +0.196] and rerank minus bm25 +0.132 [+0.039, +0.243].
+Whats not distinguishable is rerank minus hybrid +0.032 [-0.026, +0.106], MDD 0.098; rerank minus dense +0.078 [-0.002, +0.172].
+Hand queries were ranked higher on every system, while claude queries performed lower, there was a recall cap of +0.18 to +0.22. My prediction was that rerank would perform the worse, but it was indistinguishable in performance to hybrid (one of the best systems).
 
 ---
 
@@ -316,6 +349,8 @@ Read the queries at the top of each list in the second table, and say whether yo
 TODO: write the ablation: the one change, the hypothesis, the result and the claim.
 I expect hybrid at k=60 to perform worse on MRR@10 compared to hybrid at k=10 because bm25 and dense still split on paraphrased queries, and k=60 averages the right system with the wrong one on those queries.
 
+After running it, the result was +0.007 k=10 - k=60, so based on this, the k value on this corpus does not matter. In the shared corpus that was split by class, the systems had some disagreeances, but in this corpus, the two systems mostly agree (28/30 queries identical).
+
 ---
 
 ## 6. Failure analysis
@@ -340,7 +375,7 @@ Did the winner change between the shared corpus and yours?
 Why, or why not: what is different about the two collections (document length, vocabulary, identifiers, near-duplicates, how the queries were written), and which of your explanations did you test and which are guesses?
 Say what 20 queries on one side and your gold-set size on the other cannot support.
 
-TODO: write the cross-corpus comparison.
+The winner by MRR was rerank on both, but the gap between the two is different, on the shared corpus its +0.313, on my corpus its +0.032. The difference is likely the page length being so different, with the shared corpus having a median length of 62 while my corpus has 520.
 
 ---
 
@@ -353,10 +388,17 @@ It is optional, so `uv run p2 check --final` never waits on this section.
 Whichever option you chose, write these five things:
 
 1. The option's name.
+rider
 2. What you did, and the files that hold it.
+files: `p2/retrievers/rerank_c10.py`,
+`runs/shared/rerank_c10.practice.trec`, `traces/shared-practice-rerank_c10.jsonl`
+
 3. The table `p2 score` wrote for it, by name: one of the three below, `own-ablation` and `own-ablation-queries` in section 5 for a second ablation, `own-origins` in section 4 for the hand and claude queries, or `repeats` in section 9 for the rider.
+table `stretch-costs`
 4. What its interval lets you claim, and what it does not.
+asd
 5. One thing you would do next, and what result would tell you it worked.
+asd
 
 For a second ablation, write its hypothesis here before you run it, and commit it, so your history shows that it came first.
 For the hand and claude queries, do the same with your prediction before you score.
@@ -381,6 +423,7 @@ Every trace in traces/ that records a Claude call:
 | traces/answers-rerank.jsonl | rerank | 12 | 24 | 4 | 188,977 | 3,985 | 135.0 | 15,748 | 332 | 11.2 |
 | traces/own-own-rerank.jsonl | rerank | 30 | 30 | 0 | 502,356 | 2,975 | 155.2 | 16,745 | 99 | 5.2 |
 | traces/shared-practice-rerank.jsonl | rerank | 20 | 20 | 0 | 282,384 | 2,152 | 132.2 | 14,119 | 108 | 6.6 |
+| traces/shared-practice-rerank_c10.jsonl | rerank_c10 | 20 | 20 | 0 | 152,424 | 1,420 | 68.1 | 7,621 | 71 | 3.4 |
 | traces/shared-test-rerank.jsonl | rerank | 40 | 40 | 1 | 504,948 | 3,970 | 206.2 | 12,624 | 99 | 5.2 |
 
 A span is one query of a run, one question of an answers file, or one claim of a judged file. A saved reply costs nothing now, so it counts the tokens and the seconds of the call that made it.
@@ -392,6 +435,10 @@ Every pair of systems on the same queries where at least one calls Claude, the o
 | shared practice: bm25 minus rerank | 20 | -0.393 | [-0.595, -0.200] | 14,119 | 6.6 | rerank higher |
 | shared practice: dense minus rerank | 20 | -0.338 | [-0.533, -0.150] | 14,119 | 6.6 | rerank higher |
 | shared practice: hybrid minus rerank | 20 | -0.313 | [-0.478, -0.160] | 14,119 | 6.6 | rerank higher |
+| shared practice: bm25 minus rerank_c10 | 20 | -0.393 | [-0.595, -0.200] | 7,621 | 3.4 | rerank_c10 higher |
+| shared practice: dense minus rerank_c10 | 20 | -0.338 | [-0.533, -0.150] | 7,621 | 3.4 | rerank_c10 higher |
+| shared practice: hybrid minus rerank_c10 | 20 | -0.313 | [-0.478, -0.160] | 7,621 | 3.4 | rerank_c10 higher |
+| shared practice: rerank_c10 minus rerank | 20 | +0.000 | [+0.000, +0.000] | 6,498 | 3.2 | identical on every query |
 | own: bm25 minus rerank | 30 | -0.132 | [-0.243, -0.039] | 16,745 | 5.2 | rerank higher |
 | own: dense minus rerank | 30 | -0.078 | [-0.172, +0.002] | 16,745 | 5.2 | not distinguishable |
 | own: hybrid minus rerank | 30 | -0.032 | [-0.106, +0.026] | 16,745 | 5.2 | not distinguishable |
