@@ -273,6 +273,7 @@ If the result is not distinguishable, say what size of effect your gold set coul
 Read the queries at the top of each list in the second table, and say whether your change explains them.
 
 TODO: write the ablation: the one change, the hypothesis, the result and the claim.
+I expect hybrid at k=60 to perform worse on MRR@10 compared to hybrid at k=10 because bm25 and dense still split on paraphrased queries, and k=60 averages the right system with the wrong one on those queries.
 
 ---
 
