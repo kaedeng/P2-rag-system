@@ -41,7 +41,7 @@ If you rejected the alternative without measuring it, say why that was a fair ca
 "There was no alternative" is not an answer.
 Find the fork.
 
-
+The fork was the RRF k value in `hybrid`. There was a default lab's value, 60, and a smaller k. We first picked 60 and chose it, but after benchmarking, switched to 10. the original was that a large k will average to a correct answer with some noise. with a lower k value (10), we measured that the MRR@10 was 0.587 vs the k=60's MRR@10 being 0.471. We chose 10 instead of 1 (despite k=1 having the best MRR at 0.668), because there was more risk of false confidence at k=1 for a very small difference (~0.08). This costs 0 `claude -p` calls, took 1 script to run, and 60 rerank calls (~790k input tokens). 
 
 ---
 

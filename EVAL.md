@@ -30,7 +30,7 @@ words so one chunk. Each run is document level. Documents scores its best chunk.
 
 `dense`: Using `bge-small-en-v1.5`, loaded from `fastembed`, uses `384-dim` vectors, and the dot product is equal to the cosine. What's kept from the lab is that query prefixes were kept off.
 
-`hybrid`: Combines `bm25` plus `dense` using reciprocal rank fusion with `k=60` over the entirety of both rankings. One change from the code is that we dropped bm25's zero score padding before running fusion.
+`hybrid`: Combines `bm25` plus `dense` using reciprocal rank fusion with `k=10` (changed after benchmarking different values) over the entirety of both rankings. One change from the code is that we dropped bm25's zero score padding before running fusion.
 
 `reranker`: Chooses the top 20 from hybrid each query gets a `claude -p` call using sonnet, each passage is cut at 300 words, and reply is forced to a permutation of 1-20. bad reply keeps it's hybrid order, and docs below 20 stay underneath.
 
@@ -111,7 +111,9 @@ TODO: write what the practice-query intervals let you claim.
 ## 2. Stage 1 - cited answers on the 12 shared questions
 
 <!-- p2:begin answers -->
-_No answers files yet: run `uv run p2 answer --corpus shared --system NAME`, then `uv run p2 score`._
+| Label | System | Verified (in) | 95% interval | not_found (in) | Declined (out) | 95% interval | Quotes found |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| rerank | rerank | 8 of 8 (100%) | [0.676, 1.000] | 0 of 8 (0%) | 4 of 4 (100%) | [0.510, 1.000] | 12 of 12 |
 <!-- p2:end answers -->
 
 Which system answered, and why that one?
@@ -266,6 +268,7 @@ Every trace in traces/ that records a Claude call:
 
 | Trace | System | Spans | Claude calls | Saved | Input tokens | Output tokens | Seconds | Input per span | Output per span | Seconds per span |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| traces/answers-rerank.jsonl | rerank | 12 | 24 | 4 | 188,977 | 3,985 | 135.0 | 15,748 | 332 | 11.2 |
 | traces/shared-practice-rerank.jsonl | rerank | 20 | 20 | 0 | 282,384 | 2,152 | 132.2 | 14,119 | 108 | 6.6 |
 | traces/shared-test-rerank.jsonl | rerank | 40 | 40 | 1 | 504,948 | 3,970 | 206.2 | 12,624 | 99 | 5.2 |
 
