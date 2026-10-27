@@ -32,6 +32,11 @@ top = 5
 # The model for every claude -p call (the reranker and the answers).
 model = "sonnet"
 
+[hybrid]
+# Reciprocal rank fusion: each document scores the sum of 1 / (rrf_k + rank) over bm25 and dense.
+# 60 is the lab's default; 10 after a sweep on the practice queries (scripts/rrf_sweep.py).
+rrf_k = 10
+
 [dense]
 # The embedding model of the dense retriever (and of hybrid's dense half).
 model = "BAAI/bge-small-en-v1.5"

@@ -1,7 +1,8 @@
 """Hybrid retrieval (stage 1): reciprocal rank fusion of bm25 and dense.
 
-It is rrf() from the 13 lab's pipeline.py: each document scores the sum of 1 / (60 + rank) over the
-rankings it appears in, rank counted from 1.
+It is rrf() from the 13 lab's pipeline.py: each document scores the sum of 1 / (k + rank) over the
+rankings it appears in, rank counted from 1. k is [hybrid] rrf_k in p2.toml (the lab's 60 when unset);
+a smaller k lets one system's top rank win, a larger one rewards agreement between the two.
 - Both systems come from p2.retrievers.build, so each index is built once per run.
 - It fuses full rankings (every document, or every chunk), not top-10 lists, because a document
   that is 11th in both lists can belong in the fused top 10.
@@ -40,14 +41,15 @@ class Hybrid:
         self.corpus = corpus
         self.cfg = cfg
         self.systems = [retrievers.build(name, corpus, cfg) for name in SYSTEMS]
+        self.k = int(cfg.table("hybrid").get("rrf_k", RRF_K))
         self.n_docs = len(corpus.docs)
         self.n_chunks = len(corpus.chunks(cfg.chunk_words, cfg.chunk_overlap))
 
     def search(self, text: str, k: int) -> list[tuple[str, float]]:
-        return rrf(system.search(text, self.n_docs) for system in self.systems)[:k]
+        return rrf((system.search(text, self.n_docs) for system in self.systems), self.k)[:k]
 
     def search_chunks(self, text: str, k: int) -> list[tuple[str, float]]:
-        return rrf(system.search_chunks(text, self.n_chunks) for system in self.systems)[:k]
+        return rrf((system.search_chunks(text, self.n_chunks) for system in self.systems), self.k)[:k]
 
 
 def build(corpus, cfg):

@@ -41,7 +41,7 @@ If you rejected the alternative without measuring it, say why that was a fair ca
 "There was no alternative" is not an answer.
 Find the fork.
 
-The design choice was to keep hybrid's RRF at k=60 for stage 1 or to change it to a smaller k value (k=1, k=10). Keeping it would provide consensus averages on a correct answer with noise, but with a smaller k, we would have a very confident system, but it could be confidently wrong. I chose to stick with k=60 since I believe that it would be better to be correct with noise than to be confidentally incorrect and to mislead the model.
+
 
 ---
 
