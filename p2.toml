@@ -31,3 +31,14 @@ top = 5
 [claude]
 # The model for every claude -p call (the reranker and the answers).
 model = "sonnet"
+
+[dense]
+# The embedding model of the dense retriever (and of hybrid's dense half).
+model = "BAAI/bge-small-en-v1.5"
+# Text put in front of every query before it is embedded. bge v1.5 suggests
+# "Represent this sentence for searching relevant passages: "; off by default.
+query_prefix = ""
+
+[rerank]
+# How many of hybrid's top documents (or chunks) Claude reorders in one call.
+candidates = 20
