@@ -43,9 +43,9 @@ Scores per system.
 | --- | ---: | ---: | ---: |
 | bm25 | 0.625 | 0.507 | 0.518 |
 | dense | 0.558 | 0.562 | 0.480 |
-| hybrid | 0.817 | 0.587 | 0.588 |
-| rerank | 0.808 | 0.900 | 0.826 |
-| rerank_c10 | 0.817 | 0.900 | 0.822 |
+| hybrid | 0.617 | 0.471 | 0.456 |
+| rerank | 0.700 | 0.750 | 0.705 |
+| rerank_c10 | 0.617 | 0.705 | 0.618 |
 
 20 judged queries; nDCG uses binary labels; a random ranking of the 2,484 documents would get recall@10 near 0.004.
 <!-- p2:end shared-practice -->
@@ -61,15 +61,15 @@ The same scores per query class.
 | dense | Recall@10 | 0.214 | 0.595 | 0.917 |
 | dense | MRR@10 | 0.333 | 0.714 | 0.653 |
 | dense | nDCG@10 | 0.211 | 0.593 | 0.661 |
-| hybrid | Recall@10 | 1.000 | 0.548 | 0.917 |
-| hybrid | MRR@10 | 0.559 | 0.440 | 0.792 |
-| hybrid | nDCG@10 | 0.599 | 0.413 | 0.779 |
-| rerank | Recall@10 | 0.929 | 0.595 | 0.917 |
-| rerank | MRR@10 | 1.000 | 0.714 | 1.000 |
-| rerank | nDCG@10 | 0.933 | 0.626 | 0.936 |
-| rerank_c10 | Recall@10 | 1.000 | 0.548 | 0.917 |
-| rerank_c10 | MRR@10 | 1.000 | 0.714 | 1.000 |
-| rerank_c10 | nDCG@10 | 0.954 | 0.592 | 0.936 |
+| hybrid | Recall@10 | 0.571 | 0.405 | 0.917 |
+| hybrid | MRR@10 | 0.514 | 0.152 | 0.792 |
+| hybrid | nDCG@10 | 0.435 | 0.202 | 0.779 |
+| rerank | Recall@10 | 0.643 | 0.500 | 1.000 |
+| rerank | MRR@10 | 0.714 | 0.571 | 1.000 |
+| rerank | nDCG@10 | 0.641 | 0.516 | 1.000 |
+| rerank_c10 | Recall@10 | 0.571 | 0.405 | 0.917 |
+| rerank_c10 | MRR@10 | 0.586 | 0.571 | 1.000 |
+| rerank_c10 | nDCG@10 | 0.524 | 0.440 | 0.936 |
 <!-- p2:end shared-practice-classes -->
 
 Differences between every pair of systems, each with its paired interval and the minimum detectable difference.
@@ -80,33 +80,33 @@ Differences between every pair of systems, each with its paired interval and the
 | dense minus bm25 | Recall@10 | -0.067 | [-0.350, +0.225] | 0.415 | not distinguishable |
 | dense minus bm25 | MRR@10 | +0.055 | [-0.225, +0.343] | 0.412 | not distinguishable |
 | dense minus bm25 | nDCG@10 | -0.039 | [-0.302, +0.231] | 0.385 | not distinguishable |
-| hybrid minus bm25 | Recall@10 | +0.192 | [+0.050, +0.358] | 0.223 | hybrid higher |
-| hybrid minus bm25 | MRR@10 | +0.080 | [-0.099, +0.267] | 0.265 | not distinguishable |
-| hybrid minus bm25 | nDCG@10 | +0.070 | [-0.084, +0.233] | 0.229 | not distinguishable |
-| hybrid minus dense | Recall@10 | +0.258 | [+0.083, +0.450] | 0.270 | hybrid higher |
-| hybrid minus dense | MRR@10 | +0.025 | [-0.137, +0.182] | 0.231 | not distinguishable |
-| hybrid minus dense | nDCG@10 | +0.108 | [-0.028, +0.242] | 0.193 | not distinguishable |
-| rerank minus bm25 | Recall@10 | +0.183 | [+0.017, +0.367] | 0.260 | rerank higher |
-| rerank minus bm25 | MRR@10 | +0.393 | [+0.200, +0.595] | 0.287 | rerank higher |
-| rerank minus bm25 | nDCG@10 | +0.308 | [+0.129, +0.496] | 0.266 | rerank higher |
-| rerank minus dense | Recall@10 | +0.250 | [+0.075, +0.425] | 0.259 | rerank higher |
-| rerank minus dense | MRR@10 | +0.338 | [+0.150, +0.533] | 0.273 | rerank higher |
-| rerank minus dense | nDCG@10 | +0.347 | [+0.182, +0.520] | 0.248 | rerank higher |
-| rerank minus hybrid | Recall@10 | -0.008 | [-0.075, +0.050] | 0.086 | not distinguishable |
-| rerank minus hybrid | MRR@10 | +0.313 | [+0.160, +0.478] | 0.232 | rerank higher |
-| rerank minus hybrid | nDCG@10 | +0.238 | [+0.126, +0.359] | 0.169 | rerank higher |
-| rerank_c10 minus bm25 | Recall@10 | +0.192 | [+0.050, +0.358] | 0.223 | rerank_c10 higher |
-| rerank_c10 minus bm25 | MRR@10 | +0.393 | [+0.200, +0.595] | 0.287 | rerank_c10 higher |
-| rerank_c10 minus bm25 | nDCG@10 | +0.303 | [+0.137, +0.478] | 0.247 | rerank_c10 higher |
-| rerank_c10 minus dense | Recall@10 | +0.258 | [+0.083, +0.450] | 0.270 | rerank_c10 higher |
-| rerank_c10 minus dense | MRR@10 | +0.338 | [+0.150, +0.533] | 0.273 | rerank_c10 higher |
-| rerank_c10 minus dense | nDCG@10 | +0.342 | [+0.174, +0.518] | 0.249 | rerank_c10 higher |
+| hybrid minus bm25 | Recall@10 | -0.008 | [-0.225, +0.208] | 0.317 | not distinguishable |
+| hybrid minus bm25 | MRR@10 | -0.037 | [-0.178, +0.083] | 0.192 | not distinguishable |
+| hybrid minus bm25 | nDCG@10 | -0.062 | [-0.218, +0.082] | 0.218 | not distinguishable |
+| hybrid minus dense | Recall@10 | +0.058 | [-0.117, +0.242] | 0.261 | not distinguishable |
+| hybrid minus dense | MRR@10 | -0.092 | [-0.306, +0.109] | 0.301 | not distinguishable |
+| hybrid minus dense | nDCG@10 | -0.023 | [-0.193, +0.137] | 0.240 | not distinguishable |
+| rerank minus bm25 | Recall@10 | +0.075 | [-0.150, +0.300] | 0.341 | not distinguishable |
+| rerank minus bm25 | MRR@10 | +0.243 | [+0.010, +0.476] | 0.339 | rerank higher |
+| rerank minus bm25 | nDCG@10 | +0.187 | [-0.040, +0.412] | 0.328 | not distinguishable |
+| rerank minus dense | Recall@10 | +0.142 | [-0.050, +0.325] | 0.267 | not distinguishable |
+| rerank minus dense | MRR@10 | +0.188 | [-0.017, +0.392] | 0.294 | not distinguishable |
+| rerank minus dense | nDCG@10 | +0.226 | [+0.041, +0.402] | 0.263 | rerank higher |
+| rerank minus hybrid | Recall@10 | +0.083 | [+0.000, +0.175] | 0.129 | not distinguishable |
+| rerank minus hybrid | MRR@10 | +0.279 | [+0.128, +0.443] | 0.230 | rerank higher |
+| rerank minus hybrid | nDCG@10 | +0.249 | [+0.135, +0.372] | 0.174 | rerank higher |
+| rerank_c10 minus bm25 | Recall@10 | -0.008 | [-0.225, +0.208] | 0.317 | not distinguishable |
+| rerank_c10 minus bm25 | MRR@10 | +0.198 | [-0.068, +0.452] | 0.374 | not distinguishable |
+| rerank_c10 minus bm25 | nDCG@10 | +0.100 | [-0.137, +0.325] | 0.335 | not distinguishable |
+| rerank_c10 minus dense | Recall@10 | +0.058 | [-0.117, +0.242] | 0.261 | not distinguishable |
+| rerank_c10 minus dense | MRR@10 | +0.142 | [-0.086, +0.371] | 0.331 | not distinguishable |
+| rerank_c10 minus dense | nDCG@10 | +0.139 | [-0.052, +0.324] | 0.275 | not distinguishable |
 | rerank_c10 minus hybrid | Recall@10 | +0.000 | [+0.000, +0.000] | - | identical on every query |
-| rerank_c10 minus hybrid | MRR@10 | +0.313 | [+0.160, +0.478] | 0.232 | rerank_c10 higher |
-| rerank_c10 minus hybrid | nDCG@10 | +0.234 | [+0.134, +0.343] | 0.153 | rerank_c10 higher |
-| rerank_c10 minus rerank | Recall@10 | +0.008 | [-0.050, +0.075] | 0.086 | not distinguishable |
-| rerank_c10 minus rerank | MRR@10 | +0.000 | [+0.000, +0.000] | - | identical on every query |
-| rerank_c10 minus rerank | nDCG@10 | -0.005 | [-0.037, +0.025] | 0.043 | not distinguishable |
+| rerank_c10 minus hybrid | MRR@10 | +0.234 | [+0.037, +0.424] | 0.281 | rerank_c10 higher |
+| rerank_c10 minus hybrid | nDCG@10 | +0.162 | [+0.044, +0.281] | 0.172 | rerank_c10 higher |
+| rerank_c10 minus rerank | Recall@10 | -0.083 | [-0.175, +0.000] | 0.129 | not distinguishable |
+| rerank_c10 minus rerank | MRR@10 | -0.045 | [-0.135, +0.000] | 0.126 | not distinguishable |
+| rerank_c10 minus rerank | nDCG@10 | -0.087 | [-0.172, -0.019] | 0.113 | rerank higher |
 
 The interval is a paired bootstrap (10,000 resamples of the queries); MDD is the smallest difference this many queries detect 80% of the time. Two systems that score the same on every query have no interval to speak of, so their MDD is shown as -.
 <!-- p2:end shared-practice-pairs -->
@@ -132,7 +132,7 @@ Lecture 12's claim about how no retriever wins is supported by my numbers, ex. b
 <!-- p2:begin answers -->
 | Label | System | Verified (in) | 95% interval | not_found (in) | Declined (out) | 95% interval | Quotes found |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| rerank | rerank | 8 of 8 (100%) | [0.676, 1.000] | 0 of 8 (0%) | 4 of 4 (100%) | [0.510, 1.000] | 12 of 12 |
+| rerank | rerank | 8 of 8 (100%) | [0.676, 1.000] | 0 of 8 (0%) | 4 of 4 (100%) | [0.510, 1.000] | 13 of 13 |
 <!-- p2:end answers -->
 
 Which system answered, and why that one?
@@ -188,9 +188,8 @@ Scores per system on your gold set.
 | --- | ---: | ---: | ---: |
 | bm25 | 0.780 | 0.762 | 0.716 |
 | dense | 0.682 | 0.776 | 0.636 |
-| hybrid | 0.778 | 0.820 | 0.744 |
-| rerank | 0.810 | 0.899 | 0.772 |
-| ablation/hybrid_k60 | 0.778 | 0.827 | 0.745 |
+| hybrid | 0.778 | 0.827 | 0.745 |
+| rerank | 0.763 | 0.887 | 0.747 |
 
 50 judged queries; nDCG uses binary labels; a random ranking of the 424 documents would get recall@10 near 0.024.
 <!-- p2:end own -->
@@ -206,15 +205,12 @@ The same scores per query class.
 | dense | Recall@10 | 0.838 | 0.458 | 0.775 |
 | dense | MRR@10 | 0.894 | 0.505 | 0.967 |
 | dense | nDCG@10 | 0.788 | 0.394 | 0.753 |
-| hybrid | Recall@10 | 0.962 | 0.493 | 0.911 |
-| hybrid | MRR@10 | 0.971 | 0.556 | 0.967 |
-| hybrid | nDCG@10 | 0.933 | 0.447 | 0.887 |
-| rerank | Recall@10 | 0.954 | 0.629 | 0.865 |
-| rerank | MRR@10 | 0.947 | 0.771 | 1.000 |
-| rerank | nDCG@10 | 0.854 | 0.614 | 0.868 |
-| ablation/hybrid_k60 | Recall@10 | 0.954 | 0.516 | 0.894 |
-| ablation/hybrid_k60 | MRR@10 | 0.971 | 0.576 | 0.967 |
-| ablation/hybrid_k60 | nDCG@10 | 0.928 | 0.463 | 0.875 |
+| hybrid | Recall@10 | 0.954 | 0.516 | 0.894 |
+| hybrid | MRR@10 | 0.971 | 0.576 | 0.967 |
+| hybrid | nDCG@10 | 0.928 | 0.463 | 0.875 |
+| rerank | Recall@10 | 0.924 | 0.546 | 0.841 |
+| rerank | MRR@10 | 0.947 | 0.736 | 1.000 |
+| rerank | nDCG@10 | 0.864 | 0.555 | 0.843 |
 <!-- p2:end own-classes -->
 
 The same scores for the queries you wrote yourself (`hand`) and the ones a model drafted (`claude`), with the difference between the two groups and its interval.
@@ -229,15 +225,12 @@ Once both groups have queries, the table also says whether `bm25`'s lead over `d
 | dense | Recall@10 | 0.848 | 0.641 | +0.207 | [+0.058, +0.352] | hand higher |
 | dense | MRR@10 | 0.900 | 0.745 | +0.155 | [-0.024, +0.324] | not distinguishable |
 | dense | nDCG@10 | 0.787 | 0.598 | +0.189 | [+0.064, +0.317] | hand higher |
-| hybrid | Recall@10 | 0.983 | 0.727 | +0.257 | [+0.145, +0.373] | hand higher |
-| hybrid | MRR@10 | 0.900 | 0.800 | +0.100 | [-0.075, +0.263] | not distinguishable |
-| hybrid | nDCG@10 | 0.901 | 0.705 | +0.197 | [+0.058, +0.333] | hand higher |
-| rerank | Recall@10 | 0.921 | 0.782 | +0.139 | [-0.002, +0.268] | not distinguishable |
-| rerank | MRR@10 | 0.910 | 0.897 | +0.013 | [-0.201, +0.172] | not distinguishable |
-| rerank | nDCG@10 | 0.813 | 0.762 | +0.051 | [-0.122, +0.205] | not distinguishable |
-| ablation/hybrid_k60 | Recall@10 | 0.983 | 0.727 | +0.256 | [+0.149, +0.364] | hand higher |
-| ablation/hybrid_k60 | MRR@10 | 0.900 | 0.809 | +0.091 | [-0.081, +0.251] | not distinguishable |
-| ablation/hybrid_k60 | nDCG@10 | 0.903 | 0.705 | +0.198 | [+0.060, +0.330] | hand higher |
+| hybrid | Recall@10 | 0.983 | 0.727 | +0.256 | [+0.149, +0.364] | hand higher |
+| hybrid | MRR@10 | 0.900 | 0.809 | +0.091 | [-0.081, +0.251] | not distinguishable |
+| hybrid | nDCG@10 | 0.903 | 0.705 | +0.198 | [+0.060, +0.330] | hand higher |
+| rerank | Recall@10 | 0.938 | 0.720 | +0.219 | [+0.090, +0.344] | hand higher |
+| rerank | MRR@10 | 0.910 | 0.881 | +0.029 | [-0.191, +0.194] | not distinguishable |
+| rerank | nDCG@10 | 0.818 | 0.729 | +0.089 | [-0.083, +0.246] | not distinguishable |
 
 The hand and claude queries are different queries, so the interval of hand minus claude comes from resampling the queries within each group (10,000 times), not from pairing them.
 
@@ -262,33 +255,21 @@ Differences between every pair of systems.
 | dense minus bm25 | Recall@10 | -0.097 | [-0.163, -0.031] | 0.095 | bm25 higher |
 | dense minus bm25 | MRR@10 | +0.014 | [-0.058, +0.086] | 0.103 | not distinguishable |
 | dense minus bm25 | nDCG@10 | -0.081 | [-0.144, -0.015] | 0.092 | bm25 higher |
-| hybrid minus bm25 | Recall@10 | -0.002 | [-0.053, +0.046] | 0.070 | not distinguishable |
-| hybrid minus bm25 | MRR@10 | +0.058 | [+0.011, +0.117] | 0.079 | hybrid higher |
-| hybrid minus bm25 | nDCG@10 | +0.028 | [-0.020, +0.079] | 0.070 | not distinguishable |
-| hybrid minus dense | Recall@10 | +0.096 | [+0.047, +0.146] | 0.072 | hybrid higher |
-| hybrid minus dense | MRR@10 | +0.044 | [-0.005, +0.101] | 0.077 | not distinguishable |
-| hybrid minus dense | nDCG@10 | +0.108 | [+0.069, +0.149] | 0.057 | hybrid higher |
-| rerank minus bm25 | Recall@10 | +0.031 | [-0.020, +0.084] | 0.074 | not distinguishable |
-| rerank minus bm25 | MRR@10 | +0.138 | [+0.062, +0.223] | 0.118 | rerank higher |
-| rerank minus bm25 | nDCG@10 | +0.056 | [-0.009, +0.127] | 0.099 | not distinguishable |
-| rerank minus dense | Recall@10 | +0.128 | [+0.073, +0.187] | 0.082 | rerank higher |
-| rerank minus dense | MRR@10 | +0.124 | [+0.049, +0.209] | 0.115 | rerank higher |
-| rerank minus dense | nDCG@10 | +0.136 | [+0.079, +0.199] | 0.086 | rerank higher |
-| rerank minus hybrid | Recall@10 | +0.032 | [-0.012, +0.080] | 0.066 | not distinguishable |
-| rerank minus hybrid | MRR@10 | +0.079 | [+0.013, +0.160] | 0.107 | rerank higher |
-| rerank minus hybrid | nDCG@10 | +0.028 | [-0.030, +0.093] | 0.089 | not distinguishable |
-| ablation/hybrid_k60 minus bm25 | Recall@10 | -0.001 | [-0.050, +0.042] | 0.065 | not distinguishable |
-| ablation/hybrid_k60 minus bm25 | MRR@10 | +0.065 | [+0.018, +0.124] | 0.078 | ablation/hybrid_k60 higher |
-| ablation/hybrid_k60 minus bm25 | nDCG@10 | +0.028 | [-0.019, +0.079] | 0.070 | not distinguishable |
-| ablation/hybrid_k60 minus dense | Recall@10 | +0.096 | [+0.046, +0.148] | 0.074 | ablation/hybrid_k60 higher |
-| ablation/hybrid_k60 minus dense | MRR@10 | +0.052 | [+0.002, +0.108] | 0.077 | ablation/hybrid_k60 higher |
-| ablation/hybrid_k60 minus dense | nDCG@10 | +0.109 | [+0.069, +0.151] | 0.059 | ablation/hybrid_k60 higher |
-| ablation/hybrid_k60 minus hybrid | Recall@10 | +0.0005 | [-0.022, +0.027] | 0.034 | not distinguishable |
-| ablation/hybrid_k60 minus hybrid | MRR@10 | +0.007 | [-0.001, +0.017] | 0.013 | not distinguishable |
-| ablation/hybrid_k60 minus hybrid | nDCG@10 | +0.001 | [-0.013, +0.014] | 0.019 | not distinguishable |
-| ablation/hybrid_k60 minus rerank | Recall@10 | -0.032 | [-0.080, +0.014] | 0.067 | not distinguishable |
-| ablation/hybrid_k60 minus rerank | MRR@10 | -0.072 | [-0.148, -0.010] | 0.100 | rerank higher |
-| ablation/hybrid_k60 minus rerank | nDCG@10 | -0.027 | [-0.091, +0.028] | 0.085 | not distinguishable |
+| hybrid minus bm25 | Recall@10 | -0.001 | [-0.050, +0.042] | 0.065 | not distinguishable |
+| hybrid minus bm25 | MRR@10 | +0.065 | [+0.018, +0.124] | 0.078 | hybrid higher |
+| hybrid minus bm25 | nDCG@10 | +0.028 | [-0.019, +0.079] | 0.070 | not distinguishable |
+| hybrid minus dense | Recall@10 | +0.096 | [+0.046, +0.148] | 0.074 | hybrid higher |
+| hybrid minus dense | MRR@10 | +0.052 | [+0.002, +0.108] | 0.077 | hybrid higher |
+| hybrid minus dense | nDCG@10 | +0.109 | [+0.069, +0.151] | 0.059 | hybrid higher |
+| rerank minus bm25 | Recall@10 | -0.016 | [-0.074, +0.039] | 0.081 | not distinguishable |
+| rerank minus bm25 | MRR@10 | +0.125 | [+0.050, +0.212] | 0.118 | rerank higher |
+| rerank minus bm25 | nDCG@10 | +0.030 | [-0.036, +0.098] | 0.096 | not distinguishable |
+| rerank minus dense | Recall@10 | +0.081 | [+0.030, +0.134] | 0.074 | rerank higher |
+| rerank minus dense | MRR@10 | +0.111 | [+0.037, +0.195] | 0.114 | rerank higher |
+| rerank minus dense | nDCG@10 | +0.111 | [+0.058, +0.166] | 0.077 | rerank higher |
+| rerank minus hybrid | Recall@10 | -0.015 | [-0.058, +0.026] | 0.061 | not distinguishable |
+| rerank minus hybrid | MRR@10 | +0.060 | [+0.000, +0.130] | 0.094 | not distinguishable |
+| rerank minus hybrid | nDCG@10 | +0.002 | [-0.046, +0.052] | 0.070 | not distinguishable |
 
 The interval is a paired bootstrap (10,000 resamples of the queries); MDD is the smallest difference this many queries detect 80% of the time.
 <!-- p2:end own-pairs -->
@@ -310,39 +291,14 @@ Write your hypothesis here before you run it, in one sentence with a direction: 
 The run file for it lives in `runs/own/ablation/`.
 
 <!-- p2:begin own-ablation -->
-| Comparison | Metric | Mean difference | 95% interval | MDD | Reading |
-| --- | --- | ---: | ---: | ---: | --- |
-| ablation/hybrid_k60 minus bm25 | Recall@10 | -0.001 | [-0.050, +0.042] | 0.065 | not distinguishable |
-| ablation/hybrid_k60 minus bm25 | MRR@10 | +0.065 | [+0.018, +0.124] | 0.078 | ablation/hybrid_k60 higher |
-| ablation/hybrid_k60 minus bm25 | nDCG@10 | +0.028 | [-0.019, +0.079] | 0.070 | not distinguishable |
-| ablation/hybrid_k60 minus dense | Recall@10 | +0.096 | [+0.046, +0.148] | 0.074 | ablation/hybrid_k60 higher |
-| ablation/hybrid_k60 minus dense | MRR@10 | +0.052 | [+0.002, +0.108] | 0.077 | ablation/hybrid_k60 higher |
-| ablation/hybrid_k60 minus dense | nDCG@10 | +0.109 | [+0.069, +0.151] | 0.059 | ablation/hybrid_k60 higher |
-| ablation/hybrid_k60 minus hybrid | Recall@10 | +0.0005 | [-0.022, +0.027] | 0.034 | not distinguishable |
-| ablation/hybrid_k60 minus hybrid | MRR@10 | +0.007 | [-0.001, +0.017] | 0.013 | not distinguishable |
-| ablation/hybrid_k60 minus hybrid | nDCG@10 | +0.001 | [-0.013, +0.014] | 0.019 | not distinguishable |
-| ablation/hybrid_k60 minus rerank | Recall@10 | -0.032 | [-0.080, +0.014] | 0.067 | not distinguishable |
-| ablation/hybrid_k60 minus rerank | MRR@10 | -0.072 | [-0.148, -0.010] | 0.100 | rerank higher |
-| ablation/hybrid_k60 minus rerank | nDCG@10 | -0.027 | [-0.091, +0.028] | 0.085 | not distinguishable |
-
-The interval is a paired bootstrap (10,000 resamples of the queries); MDD is the smallest difference this many queries detect 80% of the time.
+_No ablation runs yet: `uv run p2 run --corpus own --system NAME --ablation` writes one to runs/own/ablation/, then `uv run p2 score` fills this table._
 <!-- p2:end own-ablation -->
 
 The queries your ablation helped and hurt, against the system it varies, by reciprocal rank.
 `p2 score` finds that system from a line such as `BASE = "bm25"` in your variant's file, or else from its name: `bm25_lab` varies `bm25`.
 
 <!-- p2:begin own-ablation-queries -->
-ablation/hybrid_k60 against hybrid (BASE = "hybrid" in p2/retrievers/hybrid_k60.py): it helped 4 queries, hurt 1 and left 45 unchanged.
-
-| Query | Class | Origin | hybrid RR | ablation/hybrid_k60 RR | Change | Effect |
-| --- | --- | --- | ---: | ---: | ---: | --- |
-| c11 | paraphrase | claude | 0.111 | 0.250 | +0.139 | helped |
-| c32 | paraphrase | claude | 0.000 | 0.111 | +0.111 | helped |
-| c31 | paraphrase | claude | 0.143 | 0.250 | +0.107 | helped |
-| c10 | paraphrase | claude | 0.167 | 0.250 | +0.083 | helped |
-| c33 | paraphrase | claude | 0.333 | 0.250 | -0.083 | hurt |
-
-RR is the reciprocal rank of the first relevant document in the top 10 (0 when none is there), the per-query value behind MRR@10; the queries at the top of each list are the ones to read.
+_No ablation runs yet: `uv run p2 run --corpus own --system NAME --ablation` writes one to runs/own/ablation/, then `uv run p2 score` fills this table._
 <!-- p2:end own-ablation-queries -->
 
 What did you change, what happened, and does the interval support the claim you want to make?
@@ -419,17 +375,17 @@ Every trace in traces/ that records a Claude call:
 
 | Trace | System | Spans | Claude calls | Saved | Input tokens | Output tokens | Seconds | Input per span | Output per span | Seconds per span |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| traces/answers-rerank.jsonl | rerank | 12 | 24 | 4 | 188,977 | 3,985 | 135.0 | 15,748 | 332 | 11.2 |
-| traces/answers-rerank.r1.jsonl | rerank | 12 | 24 | 0 | 203,419 | 4,389 | 103.9 | 16,952 | 366 | 8.7 |
-| traces/answers-rerank.r2.jsonl | rerank | 12 | 24 | 0 | 189,999 | 4,102 | 98.4 | 15,833 | 342 | 8.2 |
-| traces/answers-rerank.r3.jsonl | rerank | 12 | 24 | 0 | 222,145 | 4,688 | 95.5 | 18,512 | 391 | 8.0 |
-| traces/own-own-rerank.jsonl | rerank | 50 | 50 | 30 | 843,482 | 4,936 | 239.3 | 16,870 | 99 | 4.8 |
-| traces/shared-practice-rerank.jsonl | rerank | 20 | 20 | 20 | 282,384 | 2,152 | 132.1 | 14,119 | 108 | 6.6 |
-| traces/shared-practice-rerank.r1.jsonl | rerank | 20 | 20 | 0 | 251,060 | 1,932 | 80.0 | 12,553 | 97 | 4.0 |
-| traces/shared-practice-rerank.r2.jsonl | rerank | 20 | 20 | 0 | 236,844 | 1,820 | 77.8 | 11,842 | 91 | 3.9 |
-| traces/shared-practice-rerank.r3.jsonl | rerank | 20 | 20 | 0 | 251,050 | 2,083 | 80.7 | 12,552 | 104 | 4.0 |
-| traces/shared-practice-rerank_c10.jsonl | rerank_c10 | 20 | 20 | 20 | 152,424 | 1,420 | 68.0 | 7,621 | 71 | 3.4 |
-| traces/shared-test-rerank.jsonl | rerank | 40 | 40 | 40 | 504,948 | 3,970 | 205.9 | 12,624 | 99 | 5.1 |
+| traces/answers-rerank.jsonl | rerank | 12 | 24 | 2 | 192,395 | 4,375 | 101.0 | 16,033 | 365 | 8.4 |
+| traces/answers-rerank.r1.jsonl | rerank | 12 | 24 | 0 | 192,297 | 4,062 | 86.6 | 16,025 | 338 | 7.2 |
+| traces/answers-rerank.r2.jsonl | rerank | 12 | 24 | 0 | 205,912 | 4,487 | 92.0 | 17,159 | 374 | 7.7 |
+| traces/answers-rerank.r3.jsonl | rerank | 12 | 24 | 0 | 191,641 | 4,407 | 94.0 | 15,970 | 367 | 7.8 |
+| traces/own-own-rerank.jsonl | rerank | 50 | 50 | 2 | 841,528 | 4,985 | 199.6 | 16,831 | 100 | 4.0 |
+| traces/shared-practice-rerank.jsonl | rerank | 20 | 20 | 20 | 258,859 | 2,122 | 113.5 | 12,943 | 106 | 5.7 |
+| traces/shared-practice-rerank.r1.jsonl | rerank | 20 | 20 | 0 | 279,754 | 2,206 | 87.6 | 13,988 | 110 | 4.4 |
+| traces/shared-practice-rerank.r2.jsonl | rerank | 20 | 20 | 0 | 257,310 | 2,183 | 73.4 | 12,866 | 109 | 3.7 |
+| traces/shared-practice-rerank.r3.jsonl | rerank | 20 | 20 | 0 | 245,042 | 1,820 | 70.3 | 12,252 | 91 | 3.5 |
+| traces/shared-practice-rerank_c10.jsonl | rerank_c10 | 20 | 20 | 0 | 157,135 | 1,560 | 63.4 | 7,857 | 78 | 3.2 |
+| traces/shared-test-rerank.jsonl | rerank | 40 | 40 | 40 | 532,625 | 4,456 | 200.2 | 13,316 | 111 | 5.0 |
 
 A span is one query of a run, one question of an answers file, or one claim of a judged file. A saved reply costs nothing now, so it counts the tokens and the seconds of the call that made it.
 
@@ -437,16 +393,16 @@ Every pair of systems on the same queries where at least one calls Claude, the o
 
 | Cheaper minus dearer | Queries | MRR@10 difference | 95% interval | Input tokens saved per query | Seconds saved per query | Reading |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
-| shared practice: bm25 minus rerank | 20 | -0.393 | [-0.595, -0.200] | 14,119 | 6.6 | rerank higher |
-| shared practice: dense minus rerank | 20 | -0.338 | [-0.533, -0.150] | 14,119 | 6.6 | rerank higher |
-| shared practice: hybrid minus rerank | 20 | -0.313 | [-0.478, -0.160] | 14,119 | 6.6 | rerank higher |
-| shared practice: bm25 minus rerank_c10 | 20 | -0.393 | [-0.595, -0.200] | 7,621 | 3.4 | rerank_c10 higher |
-| shared practice: dense minus rerank_c10 | 20 | -0.338 | [-0.533, -0.150] | 7,621 | 3.4 | rerank_c10 higher |
-| shared practice: hybrid minus rerank_c10 | 20 | -0.313 | [-0.478, -0.160] | 7,621 | 3.4 | rerank_c10 higher |
-| shared practice: rerank_c10 minus rerank | 20 | +0.000 | [+0.000, +0.000] | 6,498 | 3.2 | identical on every query |
-| own: bm25 minus rerank | 50 | -0.138 | [-0.223, -0.062] | 16,870 | 4.8 | rerank higher |
-| own: dense minus rerank | 50 | -0.124 | [-0.209, -0.049] | 16,870 | 4.8 | rerank higher |
-| own: hybrid minus rerank | 50 | -0.079 | [-0.160, -0.013] | 16,870 | 4.8 | rerank higher |
+| shared practice: bm25 minus rerank | 20 | -0.243 | [-0.476, -0.010] | 12,943 | 5.7 | rerank higher |
+| shared practice: dense minus rerank | 20 | -0.188 | [-0.392, +0.017] | 12,943 | 5.7 | not distinguishable |
+| shared practice: hybrid minus rerank | 20 | -0.279 | [-0.443, -0.128] | 12,943 | 5.7 | rerank higher |
+| shared practice: bm25 minus rerank_c10 | 20 | -0.198 | [-0.452, +0.068] | 7,857 | 3.2 | not distinguishable |
+| shared practice: dense minus rerank_c10 | 20 | -0.142 | [-0.371, +0.086] | 7,857 | 3.2 | not distinguishable |
+| shared practice: hybrid minus rerank_c10 | 20 | -0.234 | [-0.424, -0.037] | 7,857 | 3.2 | rerank_c10 higher |
+| shared practice: rerank_c10 minus rerank | 20 | -0.045 | [-0.135, +0.000] | 5,086 | 2.5 | not distinguishable |
+| own: bm25 minus rerank | 50 | -0.125 | [-0.212, -0.050] | 16,831 | 4.0 | rerank higher |
+| own: dense minus rerank | 50 | -0.111 | [-0.195, -0.037] | 16,831 | 4.0 | rerank higher |
+| own: hybrid minus rerank | 50 | -0.060 | [-0.130, +0.000] | 16,831 | 4.0 | not distinguishable |
 
 The difference is the cheaper system's score minus the dearer one's, with its paired interval; the savings count Claude calls only, so a system that makes none saves all of the other's.
 
@@ -455,9 +411,9 @@ Systems that do not call Claude, from traces/retrieval/ on the machine that last
 | Trace | System | Queries | Seconds | Milliseconds per query |
 | --- | --- | ---: | ---: | ---: |
 | traces/retrieval/own-own-ablation-hybrid_k60.jsonl | hybrid_k60 | 50 | 0.22 | 4.3 |
-| traces/retrieval/own-own-bm25.jsonl | bm25 | 50 | 0.03 | 0.5 |
-| traces/retrieval/own-own-dense.jsonl | dense | 50 | 0.18 | 3.6 |
-| traces/retrieval/own-own-hybrid.jsonl | hybrid | 50 | 0.21 | 4.3 |
+| traces/retrieval/own-own-bm25.jsonl | bm25 | 50 | 0.03 | 0.6 |
+| traces/retrieval/own-own-dense.jsonl | dense | 50 | 0.18 | 3.5 |
+| traces/retrieval/own-own-hybrid.jsonl | hybrid | 50 | 0.22 | 4.4 |
 | traces/retrieval/shared-practice-bm25.jsonl | bm25 | 20 | 0.02 | 1.1 |
 | traces/retrieval/shared-practice-dense.jsonl | dense | 20 | 0.09 | 4.7 |
 | traces/retrieval/shared-practice-hybrid.jsonl | hybrid | 20 | 0.12 | 6.2 |
@@ -494,22 +450,22 @@ Repeated runs of rerank on shared/practice:
 
 | Run | Recall@10 | MRR@10 | nDCG@10 |
 | --- | ---: | ---: | ---: |
-| rerank.r1 | 0.808 | 0.900 | 0.826 |
-| rerank.r2 | 0.808 | 0.900 | 0.824 |
-| rerank.r3 | 0.808 | 0.900 | 0.826 |
-| range (max minus min) | 0.000 | 0.000 | 0.002 |
+| rerank.r1 | 0.700 | 0.750 | 0.705 |
+| rerank.r2 | 0.700 | 0.750 | 0.707 |
+| rerank.r3 | 0.700 | 0.750 | 0.703 |
+| range (max minus min) | 0.000 | 0.000 | 0.004 |
 
 | Comparison | Metric | Mean difference | 95% interval | Reading |
 | --- | --- | ---: | ---: | --- |
-| rerank.r1 minus hybrid | Recall@10 | -0.008 | [-0.075, +0.050] | not distinguishable |
-| rerank.r2 minus hybrid | Recall@10 | -0.008 | [-0.075, +0.050] | not distinguishable |
-| rerank.r3 minus hybrid | Recall@10 | -0.008 | [-0.075, +0.050] | not distinguishable |
-| rerank.r1 minus hybrid | MRR@10 | +0.313 | [+0.160, +0.478] | rerank.r1 higher |
-| rerank.r2 minus hybrid | MRR@10 | +0.313 | [+0.160, +0.478] | rerank.r2 higher |
-| rerank.r3 minus hybrid | MRR@10 | +0.313 | [+0.160, +0.478] | rerank.r3 higher |
-| rerank.r1 minus hybrid | nDCG@10 | +0.238 | [+0.126, +0.359] | rerank.r1 higher |
-| rerank.r2 minus hybrid | nDCG@10 | +0.236 | [+0.125, +0.357] | rerank.r2 higher |
-| rerank.r3 minus hybrid | nDCG@10 | +0.238 | [+0.126, +0.359] | rerank.r3 higher |
+| rerank.r1 minus hybrid | Recall@10 | +0.083 | [+0.000, +0.175] | not distinguishable |
+| rerank.r2 minus hybrid | Recall@10 | +0.083 | [+0.000, +0.175] | not distinguishable |
+| rerank.r3 minus hybrid | Recall@10 | +0.083 | [+0.000, +0.175] | not distinguishable |
+| rerank.r1 minus hybrid | MRR@10 | +0.279 | [+0.128, +0.443] | rerank.r1 higher |
+| rerank.r2 minus hybrid | MRR@10 | +0.279 | [+0.128, +0.443] | rerank.r2 higher |
+| rerank.r3 minus hybrid | MRR@10 | +0.279 | [+0.128, +0.443] | rerank.r3 higher |
+| rerank.r1 minus hybrid | nDCG@10 | +0.249 | [+0.135, +0.372] | rerank.r1 higher |
+| rerank.r2 minus hybrid | nDCG@10 | +0.251 | [+0.137, +0.375] | rerank.r2 higher |
+| rerank.r3 minus hybrid | nDCG@10 | +0.247 | [+0.131, +0.373] | rerank.r3 higher |
 
 Repeated answers shared/rerank:
 
