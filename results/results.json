@@ -1089,7 +1089,416 @@
           "mdd80": 0.043236,
           "reading": "not distinguishable"
         }
-      ]
+      ],
+      "repeats": {
+        "rerank": {
+          "runs": [
+            "runs/shared/rerank.practice.r1.trec",
+            "runs/shared/rerank.practice.r2.trec",
+            "runs/shared/rerank.practice.r3.trec"
+          ],
+          "repeat": [
+            1,
+            2,
+            3
+          ],
+          "values": {
+            "recall@10": [
+              0.808333,
+              0.808333,
+              0.808333
+            ],
+            "mrr@10": [
+              0.9,
+              0.9,
+              0.9
+            ],
+            "ndcg@10": [
+              0.826226,
+              0.824101,
+              0.826226
+            ]
+          },
+          "vs": {
+            "bm25": {
+              "recall@10": [
+                {
+                  "repeat": 1,
+                  "mean_diff": 0.183333,
+                  "ci95": [
+                    0.016667,
+                    0.366667
+                  ],
+                  "reading": "rerank.r1 higher"
+                },
+                {
+                  "repeat": 2,
+                  "mean_diff": 0.183333,
+                  "ci95": [
+                    0.016667,
+                    0.366667
+                  ],
+                  "reading": "rerank.r2 higher"
+                },
+                {
+                  "repeat": 3,
+                  "mean_diff": 0.183333,
+                  "ci95": [
+                    0.016667,
+                    0.366667
+                  ],
+                  "reading": "rerank.r3 higher"
+                }
+              ],
+              "mrr@10": [
+                {
+                  "repeat": 1,
+                  "mean_diff": 0.392857,
+                  "ci95": [
+                    0.2,
+                    0.595238
+                  ],
+                  "reading": "rerank.r1 higher"
+                },
+                {
+                  "repeat": 2,
+                  "mean_diff": 0.392857,
+                  "ci95": [
+                    0.2,
+                    0.595238
+                  ],
+                  "reading": "rerank.r2 higher"
+                },
+                {
+                  "repeat": 3,
+                  "mean_diff": 0.392857,
+                  "ci95": [
+                    0.2,
+                    0.595238
+                  ],
+                  "reading": "rerank.r3 higher"
+                }
+              ],
+              "ndcg@10": [
+                {
+                  "repeat": 1,
+                  "mean_diff": 0.307916,
+                  "ci95": [
+                    0.12859,
+                    0.496187
+                  ],
+                  "reading": "rerank.r1 higher"
+                },
+                {
+                  "repeat": 2,
+                  "mean_diff": 0.305791,
+                  "ci95": [
+                    0.126049,
+                    0.495094
+                  ],
+                  "reading": "rerank.r2 higher"
+                },
+                {
+                  "repeat": 3,
+                  "mean_diff": 0.307916,
+                  "ci95": [
+                    0.12859,
+                    0.496187
+                  ],
+                  "reading": "rerank.r3 higher"
+                }
+              ]
+            },
+            "dense": {
+              "recall@10": [
+                {
+                  "repeat": 1,
+                  "mean_diff": 0.25,
+                  "ci95": [
+                    0.075,
+                    0.425
+                  ],
+                  "reading": "rerank.r1 higher"
+                },
+                {
+                  "repeat": 2,
+                  "mean_diff": 0.25,
+                  "ci95": [
+                    0.075,
+                    0.425
+                  ],
+                  "reading": "rerank.r2 higher"
+                },
+                {
+                  "repeat": 3,
+                  "mean_diff": 0.25,
+                  "ci95": [
+                    0.075,
+                    0.425
+                  ],
+                  "reading": "rerank.r3 higher"
+                }
+              ],
+              "mrr@10": [
+                {
+                  "repeat": 1,
+                  "mean_diff": 0.3375,
+                  "ci95": [
+                    0.15,
+                    0.533333
+                  ],
+                  "reading": "rerank.r1 higher"
+                },
+                {
+                  "repeat": 2,
+                  "mean_diff": 0.3375,
+                  "ci95": [
+                    0.15,
+                    0.533333
+                  ],
+                  "reading": "rerank.r2 higher"
+                },
+                {
+                  "repeat": 3,
+                  "mean_diff": 0.3375,
+                  "ci95": [
+                    0.15,
+                    0.533333
+                  ],
+                  "reading": "rerank.r3 higher"
+                }
+              ],
+              "ndcg@10": [
+                {
+                  "repeat": 1,
+                  "mean_diff": 0.346614,
+                  "ci95": [
+                    0.181918,
+                    0.520332
+                  ],
+                  "reading": "rerank.r1 higher"
+                },
+                {
+                  "repeat": 2,
+                  "mean_diff": 0.344489,
+                  "ci95": [
+                    0.18061,
+                    0.516824
+                  ],
+                  "reading": "rerank.r2 higher"
+                },
+                {
+                  "repeat": 3,
+                  "mean_diff": 0.346614,
+                  "ci95": [
+                    0.181918,
+                    0.520332
+                  ],
+                  "reading": "rerank.r3 higher"
+                }
+              ]
+            },
+            "hybrid": {
+              "recall@10": [
+                {
+                  "repeat": 1,
+                  "mean_diff": -0.008333,
+                  "ci95": [
+                    -0.075,
+                    0.05
+                  ],
+                  "reading": "not distinguishable"
+                },
+                {
+                  "repeat": 2,
+                  "mean_diff": -0.008333,
+                  "ci95": [
+                    -0.075,
+                    0.05
+                  ],
+                  "reading": "not distinguishable"
+                },
+                {
+                  "repeat": 3,
+                  "mean_diff": -0.008333,
+                  "ci95": [
+                    -0.075,
+                    0.05
+                  ],
+                  "reading": "not distinguishable"
+                }
+              ],
+              "mrr@10": [
+                {
+                  "repeat": 1,
+                  "mean_diff": 0.312798,
+                  "ci95": [
+                    0.159524,
+                    0.477679
+                  ],
+                  "reading": "rerank.r1 higher"
+                },
+                {
+                  "repeat": 2,
+                  "mean_diff": 0.312798,
+                  "ci95": [
+                    0.159524,
+                    0.477679
+                  ],
+                  "reading": "rerank.r2 higher"
+                },
+                {
+                  "repeat": 3,
+                  "mean_diff": 0.312798,
+                  "ci95": [
+                    0.159524,
+                    0.477679
+                  ],
+                  "reading": "rerank.r3 higher"
+                }
+              ],
+              "ndcg@10": [
+                {
+                  "repeat": 1,
+                  "mean_diff": 0.238175,
+                  "ci95": [
+                    0.126228,
+                    0.359332
+                  ],
+                  "reading": "rerank.r1 higher"
+                },
+                {
+                  "repeat": 2,
+                  "mean_diff": 0.23605,
+                  "ci95": [
+                    0.125005,
+                    0.357026
+                  ],
+                  "reading": "rerank.r2 higher"
+                },
+                {
+                  "repeat": 3,
+                  "mean_diff": 0.238175,
+                  "ci95": [
+                    0.126228,
+                    0.359332
+                  ],
+                  "reading": "rerank.r3 higher"
+                }
+              ]
+            },
+            "rerank_c10": {
+              "recall@10": [
+                {
+                  "repeat": 1,
+                  "mean_diff": -0.008333,
+                  "ci95": [
+                    -0.075,
+                    0.05
+                  ],
+                  "reading": "not distinguishable"
+                },
+                {
+                  "repeat": 2,
+                  "mean_diff": -0.008333,
+                  "ci95": [
+                    -0.075,
+                    0.05
+                  ],
+                  "reading": "not distinguishable"
+                },
+                {
+                  "repeat": 3,
+                  "mean_diff": -0.008333,
+                  "ci95": [
+                    -0.075,
+                    0.05
+                  ],
+                  "reading": "not distinguishable"
+                }
+              ],
+              "mrr@10": [
+                {
+                  "repeat": 1,
+                  "mean_diff": 0.0,
+                  "ci95": [
+                    0.0,
+                    0.0
+                  ],
+                  "reading": "not distinguishable"
+                },
+                {
+                  "repeat": 2,
+                  "mean_diff": 0.0,
+                  "ci95": [
+                    0.0,
+                    0.0
+                  ],
+                  "reading": "not distinguishable"
+                },
+                {
+                  "repeat": 3,
+                  "mean_diff": 0.0,
+                  "ci95": [
+                    0.0,
+                    0.0
+                  ],
+                  "reading": "not distinguishable"
+                }
+              ],
+              "ndcg@10": [
+                {
+                  "repeat": 1,
+                  "mean_diff": 0.004628,
+                  "ci95": [
+                    -0.025183,
+                    0.037321
+                  ],
+                  "reading": "not distinguishable"
+                },
+                {
+                  "repeat": 2,
+                  "mean_diff": 0.002503,
+                  "ci95": [
+                    -0.027686,
+                    0.035196
+                  ],
+                  "reading": "not distinguishable"
+                },
+                {
+                  "repeat": 3,
+                  "mean_diff": 0.004628,
+                  "ci95": [
+                    -0.025183,
+                    0.037321
+                  ],
+                  "reading": "not distinguishable"
+                }
+              ]
+            }
+          },
+          "spread": {
+            "recall@10": {
+              "min": 0.808333,
+              "max": 0.808333,
+              "range": 0.0,
+              "sd": 0.0
+            },
+            "mrr@10": {
+              "min": 0.9,
+              "max": 0.9,
+              "range": 0.0,
+              "sd": 0.0
+            },
+            "ndcg@10": {
+              "min": 0.824101,
+              "max": 0.826226,
+              "range": 0.002125,
+              "sd": 0.001227
+            }
+          }
+        }
+      }
     },
     "own/own": {
       "corpus": "own",
@@ -2741,6 +3150,120 @@
         "a11": true,
         "a12": true
       }
+    },
+    "shared/rerank.r1": {
+      "file": "answers/shared/rerank.r1.json",
+      "corpus": "shared",
+      "system": "rerank",
+      "model": "sonnet",
+      "n_in": 8,
+      "n_out": 4,
+      "verified": 8,
+      "not_found_in": 0,
+      "declined_out": 4,
+      "claims": 13,
+      "claims_verified": 13,
+      "verified_share": 1.0,
+      "verified_wilson95": [
+        0.675592,
+        1.0
+      ],
+      "not_found_in_share": 0.0,
+      "declined_out_share": 1.0,
+      "declined_out_wilson95": [
+        0.510109,
+        1.0
+      ],
+      "passed": {
+        "a01": true,
+        "a02": true,
+        "a03": true,
+        "a04": true,
+        "a05": true,
+        "a06": true,
+        "a07": true,
+        "a08": true,
+        "a09": true,
+        "a10": true,
+        "a11": true,
+        "a12": true
+      }
+    },
+    "shared/rerank.r2": {
+      "file": "answers/shared/rerank.r2.json",
+      "corpus": "shared",
+      "system": "rerank",
+      "model": "sonnet",
+      "n_in": 8,
+      "n_out": 4,
+      "verified": 8,
+      "not_found_in": 0,
+      "declined_out": 4,
+      "claims": 12,
+      "claims_verified": 12,
+      "verified_share": 1.0,
+      "verified_wilson95": [
+        0.675592,
+        1.0
+      ],
+      "not_found_in_share": 0.0,
+      "declined_out_share": 1.0,
+      "declined_out_wilson95": [
+        0.510109,
+        1.0
+      ],
+      "passed": {
+        "a01": true,
+        "a02": true,
+        "a03": true,
+        "a04": true,
+        "a05": true,
+        "a06": true,
+        "a07": true,
+        "a08": true,
+        "a09": true,
+        "a10": true,
+        "a11": true,
+        "a12": true
+      }
+    },
+    "shared/rerank.r3": {
+      "file": "answers/shared/rerank.r3.json",
+      "corpus": "shared",
+      "system": "rerank",
+      "model": "sonnet",
+      "n_in": 8,
+      "n_out": 4,
+      "verified": 8,
+      "not_found_in": 0,
+      "declined_out": 4,
+      "claims": 13,
+      "claims_verified": 13,
+      "verified_share": 1.0,
+      "verified_wilson95": [
+        0.675592,
+        1.0
+      ],
+      "not_found_in_share": 0.0,
+      "declined_out_share": 1.0,
+      "declined_out_wilson95": [
+        0.510109,
+        1.0
+      ],
+      "passed": {
+        "a01": true,
+        "a02": true,
+        "a03": true,
+        "a04": true,
+        "a05": true,
+        "a06": true,
+        "a07": true,
+        "a08": true,
+        "a09": true,
+        "a10": true,
+        "a11": true,
+        "a12": true
+      }
     }
   },
   "stretch": {
@@ -2761,6 +3284,36 @@
           "seconds": 134.9907
         },
         {
+          "file": "traces/answers-rerank.r1.jsonl",
+          "system": "rerank",
+          "spans": 12,
+          "calls": 24,
+          "saved": 0,
+          "input_tokens": 203419,
+          "output_tokens": 4389,
+          "seconds": 103.8782
+        },
+        {
+          "file": "traces/answers-rerank.r2.jsonl",
+          "system": "rerank",
+          "spans": 12,
+          "calls": 24,
+          "saved": 0,
+          "input_tokens": 189999,
+          "output_tokens": 4102,
+          "seconds": 98.4435
+        },
+        {
+          "file": "traces/answers-rerank.r3.jsonl",
+          "system": "rerank",
+          "spans": 12,
+          "calls": 24,
+          "saved": 0,
+          "input_tokens": 222145,
+          "output_tokens": 4688,
+          "seconds": 95.4868
+        },
+        {
           "file": "traces/own-own-rerank.jsonl",
           "system": "rerank",
           "spans": 30,
@@ -2779,6 +3332,36 @@
           "input_tokens": 282384,
           "output_tokens": 2152,
           "seconds": 132.2176
+        },
+        {
+          "file": "traces/shared-practice-rerank.r1.jsonl",
+          "system": "rerank",
+          "spans": 20,
+          "calls": 20,
+          "saved": 0,
+          "input_tokens": 251060,
+          "output_tokens": 1932,
+          "seconds": 80.0411
+        },
+        {
+          "file": "traces/shared-practice-rerank.r2.jsonl",
+          "system": "rerank",
+          "spans": 20,
+          "calls": 20,
+          "saved": 0,
+          "input_tokens": 236844,
+          "output_tokens": 1820,
+          "seconds": 77.7961
+        },
+        {
+          "file": "traces/shared-practice-rerank.r3.jsonl",
+          "system": "rerank",
+          "spans": 20,
+          "calls": 20,
+          "saved": 0,
+          "input_tokens": 251050,
+          "output_tokens": 2083,
+          "seconds": 80.7073
         },
         {
           "file": "traces/shared-practice-rerank_c10.jsonl",
@@ -3318,5 +3901,27 @@
       ]
     },
     "agent": {}
+  },
+  "answer_repeats": {
+    "shared/rerank": {
+      "files": [
+        "answers/shared/rerank.r1.json",
+        "answers/shared/rerank.r2.json",
+        "answers/shared/rerank.r3.json"
+      ],
+      "verified_share": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "declined_out_share": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "n_repeats": 3,
+      "verified_share_range": 0.0,
+      "declined_out_share_range": 0.0
+    }
   }
 }

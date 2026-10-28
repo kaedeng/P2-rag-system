@@ -80,4 +80,4 @@ One thing in your system, your corpus or your gold set that is not right, not fi
 What would you do next, and how would you find out whether it matters?
 Name the file, the query or the document where someone could look.
 
-passage() in p2/retrievers/rerank.py shows the first 300 words. For query h03, hybrid rank 2, rerank rank 10, page 5,280 words. 
+passage() in p2/retrievers/rerank.py shows the first 300 words. For query h03, hybrid rank 2, rerank rank 10, page 5,280 words.

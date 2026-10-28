@@ -120,8 +120,8 @@ Which differences are distinguishable from zero and which are not?
 What is the minimum detectable difference at 20 queries, and what does that say about any gap smaller than it?
 Which claim from lecture 12 or 13 did your numbers support, and which did they leave open?
 
-MRR@10 is distinguishable from zero.
-Not distinguishable is every pair from bm25, hybrid, dense. 
+MRR@10 is distinguishable from zero, with rerank minus hybrid +0.313 [+0.160, +0.478]; rerank minus bm25 +0.393 [+0.200, +0.595];  rerank minus dense +0.338 [+0.150, +0.533]).
+Not distinguishable is hybrid minus bm25 +0.080 [-0.099, +0.267].
 The minimum detectable difference is roughly 0.19-0.41.
 Lecture 12's claim about how no retriever wins is supported by my numbers, ex. bm25 identifier recall 1.000, paraphrase 0.000; dense 0.214 and 0.595. One thing left open was whether hybrid beats either input, since those intervals include zero.
 
@@ -346,7 +346,6 @@ What did you change, what happened, and does the interval support the claim you 
 If the result is not distinguishable, say what size of effect your gold set could have seen.
 Read the queries at the top of each list in the second table, and say whether your change explains them.
 
-TODO: write the ablation: the one change, the hypothesis, the result and the claim.
 I expect hybrid at k=60 to perform worse on MRR@10 compared to hybrid at k=10 because bm25 and dense still split on paraphrased queries, and k=60 averages the right system with the wrong one on those queries.
 
 After running it, the result was +0.007 k=10 - k=60, so based on this, the k value on this corpus does not matter. In the shared corpus that was split by class, the systems had some disagreeances, but in this corpus, the two systems mostly agree (28/30 queries identical).
@@ -361,8 +360,11 @@ Then sort the failures by cause, for example a vocabulary mismatch, near-duplica
 
 | qid | what the best system returned | what was relevant | cause | what you would try |
 |---|---|---|---|---|
-
-TODO: add one row for each failure you analyzed, and write two or three sentences on the pattern you see across them.
+|c12|rustc_jobserver|rank 41, RR0|idk|idk|
+|c11|rustc_remap-source-paths|rank below 50|idk|idk|
+|c08|two-phase-borrows|rank below 50 despite example|idk|idk|
+|c09|pr_lifecycle|missing tests_crater|idk|idk|
+|h03|rustdoc_unstable-features|hybrid 2, rerank 10, 5280 words|idk|idk|
 
 ---
 
@@ -390,16 +392,10 @@ Whichever option you chose, write these five things:
 1. The option's name.
 rider
 2. What you did, and the files that hold it.
-files: `p2/retrievers/rerank_c10.py`,
-`runs/shared/rerank_c10.practice.trec`, `traces/shared-practice-rerank_c10.jsonl`
-
+files: 
 3. The table `p2 score` wrote for it, by name: one of the three below, `own-ablation` and `own-ablation-queries` in section 5 for a second ablation, `own-origins` in section 4 for the hand and claude queries, or `repeats` in section 9 for the rider.
-table `stretch-costs`
 4. What its interval lets you claim, and what it does not.
-asd
 5. One thing you would do next, and what result would tell you it worked.
-asd
-
 For a second ablation, write its hypothesis here before you run it, and commit it, so your history shows that it came first.
 For the hand and claude queries, do the same with your prediction before you score.
 
@@ -421,8 +417,14 @@ Every trace in traces/ that records a Claude call:
 | Trace | System | Spans | Claude calls | Saved | Input tokens | Output tokens | Seconds | Input per span | Output per span | Seconds per span |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | traces/answers-rerank.jsonl | rerank | 12 | 24 | 4 | 188,977 | 3,985 | 135.0 | 15,748 | 332 | 11.2 |
+| traces/answers-rerank.r1.jsonl | rerank | 12 | 24 | 0 | 203,419 | 4,389 | 103.9 | 16,952 | 366 | 8.7 |
+| traces/answers-rerank.r2.jsonl | rerank | 12 | 24 | 0 | 189,999 | 4,102 | 98.4 | 15,833 | 342 | 8.2 |
+| traces/answers-rerank.r3.jsonl | rerank | 12 | 24 | 0 | 222,145 | 4,688 | 95.5 | 18,512 | 391 | 8.0 |
 | traces/own-own-rerank.jsonl | rerank | 30 | 30 | 0 | 502,356 | 2,975 | 155.2 | 16,745 | 99 | 5.2 |
 | traces/shared-practice-rerank.jsonl | rerank | 20 | 20 | 0 | 282,384 | 2,152 | 132.2 | 14,119 | 108 | 6.6 |
+| traces/shared-practice-rerank.r1.jsonl | rerank | 20 | 20 | 0 | 251,060 | 1,932 | 80.0 | 12,553 | 97 | 4.0 |
+| traces/shared-practice-rerank.r2.jsonl | rerank | 20 | 20 | 0 | 236,844 | 1,820 | 77.8 | 11,842 | 91 | 3.9 |
+| traces/shared-practice-rerank.r3.jsonl | rerank | 20 | 20 | 0 | 251,050 | 2,083 | 80.7 | 12,552 | 104 | 4.0 |
 | traces/shared-practice-rerank_c10.jsonl | rerank_c10 | 20 | 20 | 0 | 152,424 | 1,420 | 68.1 | 7,621 | 71 | 3.4 |
 | traces/shared-test-rerank.jsonl | rerank | 40 | 40 | 1 | 504,948 | 3,970 | 206.2 | 12,624 | 99 | 5.2 |
 
@@ -485,7 +487,37 @@ Write the five things here.
 Three runs of the reranker on the practice queries, and three answers files, with their run-to-run spread and Wilson intervals.
 
 <!-- p2:begin repeats -->
-_No repeated runs or answers files yet (598E: `p2 run ... --repeat 3` and `p2 answer ... --repeat 3`)._
+Repeated runs of rerank on shared/practice:
+
+| Run | Recall@10 | MRR@10 | nDCG@10 |
+| --- | ---: | ---: | ---: |
+| rerank.r1 | 0.808 | 0.900 | 0.826 |
+| rerank.r2 | 0.808 | 0.900 | 0.824 |
+| rerank.r3 | 0.808 | 0.900 | 0.826 |
+| range (max minus min) | 0.000 | 0.000 | 0.002 |
+
+| Comparison | Metric | Mean difference | 95% interval | Reading |
+| --- | --- | ---: | ---: | --- |
+| rerank.r1 minus hybrid | Recall@10 | -0.008 | [-0.075, +0.050] | not distinguishable |
+| rerank.r2 minus hybrid | Recall@10 | -0.008 | [-0.075, +0.050] | not distinguishable |
+| rerank.r3 minus hybrid | Recall@10 | -0.008 | [-0.075, +0.050] | not distinguishable |
+| rerank.r1 minus hybrid | MRR@10 | +0.313 | [+0.160, +0.478] | rerank.r1 higher |
+| rerank.r2 minus hybrid | MRR@10 | +0.313 | [+0.160, +0.478] | rerank.r2 higher |
+| rerank.r3 minus hybrid | MRR@10 | +0.313 | [+0.160, +0.478] | rerank.r3 higher |
+| rerank.r1 minus hybrid | nDCG@10 | +0.238 | [+0.126, +0.359] | rerank.r1 higher |
+| rerank.r2 minus hybrid | nDCG@10 | +0.236 | [+0.125, +0.357] | rerank.r2 higher |
+| rerank.r3 minus hybrid | nDCG@10 | +0.238 | [+0.126, +0.359] | rerank.r3 higher |
+
+Repeated answers shared/rerank:
+
+| File | Verified (in) | 95% interval | Declined (out) | 95% interval |
+| --- | ---: | ---: | ---: | ---: |
+| rerank.r1 | 8 of 8 (100%) | [0.676, 1.000] | 4 of 4 (100%) | [0.510, 1.000] |
+| rerank.r2 | 8 of 8 (100%) | [0.676, 1.000] | 4 of 4 (100%) | [0.510, 1.000] |
+| rerank.r3 | 8 of 8 (100%) | [0.676, 1.000] | 4 of 4 (100%) | [0.510, 1.000] |
+| range (max minus min) | 0.000 |  | 0.000 |  |
+
+Each repeat answers the same questions, so the repeats are not independent trials and their counts are not pooled into one interval.
 <!-- p2:end repeats -->
 
 Does the reranker's gain over its first stage survive the run-to-run variation?
