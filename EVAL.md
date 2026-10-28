@@ -305,7 +305,7 @@ What did you change, what happened, and does the interval support the claim you 
 If the result is not distinguishable, say what size of effect your gold set could have seen.
 Read the queries at the top of each list in the second table, and say whether your change explains them.
 
-I expect hybrid at k=60 to perform worse on MRR@10 compared to hybrid at k=10 because bm25 and dense still split on paraphrased queries, and k=60 averages the right system with the wrong one on those queries.
+I expect that dense_prefix will have no change in dense's MRR@10 since the 40 drafts are full sentences and my chunks are 300 word passages, the prefix was designed for short queries, so the effect would be too small for the 50 queries to see. MDD for a dense vs dense pair will be small.
 
 After running it, the result was +0.007 k=10 - k=60, so based on this, the k value on this corpus does not matter. In the shared corpus that was split by class, the systems had some disagreeances, but in this corpus, the two systems mostly agree (28/30 queries identical).
 
