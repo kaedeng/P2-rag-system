@@ -24,7 +24,7 @@ One sentence, about your own corpus, naming two of your systems and a direction.
 For example: "On my corpus of Kubernetes documentation, `rerank` has a higher MRR@10 than `hybrid`, because the queries are paraphrases that a first-stage fusion ranks too low."
 It should be something you could be wrong about.
 
-TODO: your hypothesis.
+On my corpus of the Rust compiler documentation, I hypothesize that dense performs better than hybrid since the median file size is very large. bm25 might hurt the performance of hybrid because it matches the query words on long pages that only mention the term, which could introduce irrelevant pages.
 
 ---
 
@@ -36,7 +36,7 @@ A difference of 0.02 is usually not worth a reranker's cost in time and tokens.
 In this course, choose a Δ of at least 0.15 unless you argue for a larger one, because a smaller gap takes more queries than one project can judge.
 Call your number Δ (delta).
 
-TODO: your metric and your Δ, with the reason.
+My metric is MRR@10 with a delta of 0.15. Hybrid costs nothing extra over dense, so a gap that only moves the first page up a rank on average would be what is shown to the user, and 0.15 is the smallest gap 55 queries can see.
 
 ---
 
@@ -65,7 +65,7 @@ After you score the own corpus, the minimum detectable difference that `uv run p
 It should come out at or below your Δ.
 If it does not, your queries varied more than your stage 1 sd suggested, and you will say so in the outcome.
 
-TODO: your sd, which pair it came from, your n, and the number of queries you will write (at least n).
+My sd will be 0.369 (from 20 shared practice queries, rounded up to account for noise) for hybrid vs dense (n = ((1.96 + 0.84) × sd/Δ)²), the n for delta=0.15 is 48, and the number of queries I will have is 55 queries (30 existing + 25 new).
 
 ---
 
@@ -82,7 +82,7 @@ This is the default rule, and you can tighten it, but do not loosen it after you
 | around zero, with both ends inside plus or minus Δ | well-powered null: a difference as large as Δ is ruled out |
 | around zero, with an end beyond plus or minus Δ | inconclusive: the gold set could not settle it, and I say so |
 
-TODO: confirm or tighten this rule, and name the two systems and the metric once more.
+Confirming the default table, the pair is hybrid vs dense, metric is on MRR@10.
 
 ---
 
@@ -101,3 +101,6 @@ TODO: your outcome.
 
 Dated entries only, one per change, each saying what changed and why.
 Leave this section as it is if nothing changed.
+
+2026-10-27: Order was changed, 30 queries judged on 0c8c22f under 498E, changed to 598E at f43f2e5. Prereg was written after those scores were known.
+Plan: 20 drafted plus any hand queries judged after this PREREG commit, commit to be added in a second dated entry.
