@@ -33,3 +33,24 @@ c17	mixed	@rustbot: I rebased my PR after merge conflicts, how do I tell reviewe
 c18	mixed	--cap-lints: is that why I never see warnings from my dependencies when cargo builds them?	claude
 c19	mixed	avr-none: why do I still need avr-gcc installed if Rust already supports the target?	claude
 c20	mixed	standalone_crate: when should a doctest be kept out of the merged run in the 2024 edition?	claude
+# second block, drafted after PREREG.md was committed; judged after it
+c21	identifier	build.allocator = "jemalloc"	claude
+c22	identifier	#[rustc_diagnostic_item]	claude
+c23	identifier	build.compiler-docs = true	claude
+c24	identifier	stdlib-semver-check-stamp	claude
+c25	identifier	what's in the bad-style lint group	claude
+c26	identifier	#![doc(html_playground_url)]	claude
+c27	identifier	RUST_TARGET_PATH	claude
+c28	paraphrase	Can I pull a new third-party library from the package registry into the compiler's build, and is there an approved list I'd have to add it to?	claude
+c29	paraphrase	Why can the compiler decide two types are equal just by checking that they sit at the same location, without looking at what's inside them?	claude
+c30	paraphrase	The lowest-level library is built before the full standard library and can't call into it, so how does a fatal error raised down there still get handled by code in the standard library?	claude
+c31	paraphrase	Linker errors show my function names as long garbled strings starting with _R; is there a utility that turns them back into plain module::function names?	claude
+c32	paraphrase	Does a release build on Linux get loaded at an unpredictable spot in memory each run, and how can I confirm that by inspecting the output file?	claude
+c33	paraphrase	One of my types only exists when compiling for one operating system; how do I make it still appear in the generated API reference when I build the docs on a different OS?	claude
+c34	paraphrase	After upgrading my crate to the newest language version, the formatter now orders names like u8, u16, u128 by their number instead of letter by letter; is that an intentional rule change?	claude
+c35	mixed	tcx.lang_items().sized_trait() returns an Option; when can it be None, and is it fine to just panic in that case?	claude
+c36	mixed	DEPLOY_ALT: do I need to set it when running a CI job's container image on my own machine?	claude
+c37	mixed	FutureIncompatibleInfo: if my fix only breaks a handful of crates, can I skip the warning period and make it a hard error right away?	claude
+c38	mixed	-C target-feature=+soft-float on x86_64 makes my program segfault, why?	claude
+c39	mixed	wasm32-wasi: my old build command can't find this target anymore, what's it called now?	claude
+c40	mixed	nvptx64-nvidia-cuda: which CUDA driver does the default PTX version need, and how do I get a newer PTX without changing the GPU architecture?	claude
