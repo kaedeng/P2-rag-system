@@ -107,3 +107,5 @@ Plan: 20 drafted plus any hand queries judged after this PREREG commit, commit t
 
 2026-10-27: second block of 20 drafted queries and judgments committed at
 59078bb; rerun and scored at 83b75ac. no extra hand queries, so 50 queries instead of 55. Sections 1 to 4 unchanged.
+
+2026-10-27: hybrid k changed from 10 back to 60 after registration because k=10 ran files dont reproduce across different machines. This was decided after the outcome was known to me. Section 5 was re-evaluated after the k=60 ran.

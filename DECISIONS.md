@@ -43,6 +43,8 @@ Find the fork.
 
 The fork was the RRF k value in `hybrid`. There was a default lab's value, 60, and a smaller k. We first picked 60, but after benchmarking, switched to 10. the original was that a large k will average to a correct answer with some noise. with a lower k value (10), we measured that the k=10 minus k=60, MRR@10: +0.117, 95% paired interval [+0.037, +0.218], this excludes zero, MDD 0.135. Recall@10: +0.200 [+0.067, +0.358]. Another piece of data we got was that rerank went from 0.750 to 0.900 with no change to the reranker, We chose 10 instead of 1 (despite k=1 having the best MRR at 0.668), because there was more risk of false confidence at k=1 for a very small difference (k=1 minus k=10, MRR@10: +0.081 [+0.002, +0.175], MDD 0.130. Lower bound +0.002, recall@10: +0.000). Measuring costs 0 `claude -p` calls and took 1 script to run and switching costs 60 rerank calls (~790k input tokens). 
 
+The above was the previous testing, we found that k=10's measurement was not reproducible, so we reverted to k=60. What broke was the CI, it's fresh run gave own query c09's rank 5 page 1/15 + 1/26, where my file had 1/15 + 1/25. the score difference was 0.0015 against the tolerance of 0.001. By reverting, i gave up the shared corpus hybrid score of 0.587 to 0.471, and costed 286 calls, 3.6 million tokens, and a rerun of every claude calling system.
+
 ---
 
 ## 3. Where you overruled the agent
@@ -57,7 +59,7 @@ What did you do instead?
 If it genuinely never happened, say so plainly, and then say what you would have had to check in order to notice.
 Being honest here costs you far less than a story you cannot defend when you record your video.
 
-Claude advised for sticking with k=60 for RRF in hybrid, I overruled it for a lower k value after measuring. The measurement said that k=1 performed better
+Claude advised for sticking with k=60 for RRF in hybrid, I overruled it for a lower k value after measuring. The measurement said that k=1 performed better, so I chose k=10. Now, after running in CI, we reverted from a lower k to k=60.
 
 ---
 
@@ -80,4 +82,4 @@ One thing in your system, your corpus or your gold set that is not right, not fi
 What would you do next, and how would you find out whether it matters?
 Name the file, the query or the document where someone could look.
 
-passage() in p2/retrievers/rerank.py shows the first 300 words. For query h03, hybrid rank 2, rerank rank 10, page 5,280 words.
+What is still wrong is that k=10 was measured better in practice but the results were not reproducible. The file would be p2/retrievers/hybrid.py, [hybrid] rrf_k, I'd test if a score based fusion has a noise that stays under 0.001. I'd find out by running scripts/fusion_robust.py then push with a fresh CI runner and see the ci log off that.

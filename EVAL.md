@@ -30,9 +30,9 @@ words so one chunk. Each run is document level. Documents scores its best chunk.
 
 `dense`: Using `bge-small-en-v1.5`, loaded from `fastembed`, uses `384-dim` vectors, and the dot product is equal to the cosine. What's kept from the lab is that query prefixes were kept off.
 
-`hybrid`: Combines `bm25` plus `dense` using reciprocal rank fusion with `k=10` (changed after benchmarking different values) over the entirety of both rankings. One change from the code is that we dropped bm25's zero score padding before running fusion.
+`hybrid`: Combines `bm25` plus `dense` using reciprocal rank fusion with `k=60` (the lab default; a k=10 variant scored higher on the practice queries, MRR 0.587 vs 0.471, but its run files did not reproduce across machines, see DECISIONS prompt 2) over the entirety of both rankings. One change from the code is that we dropped bm25's zero score padding before running fusion.
 
-`reranker`: Chooses the top 20 from hybrid each query gets a `claude -p` call using sonnet, each passage is cut at 300 words, and reply is forced to a permutation of 1-20. bad reply keeps it's hybrid order, and docs below 20 stay underneath.
+`rerank`: Chooses the top 20 from hybrid each query gets a `claude -p` call using sonnet, each passage is cut at 300 words, and reply is forced to a permutation of 1-20. bad reply keeps its hybrid order, and docs below 20 stay underneath.
 
 ### Practice queries (20)
 
@@ -120,8 +120,8 @@ Which differences are distinguishable from zero and which are not?
 What is the minimum detectable difference at 20 queries, and what does that say about any gap smaller than it?
 Which claim from lecture 12 or 13 did your numbers support, and which did they leave open?
 
-MRR@10 is distinguishable from zero, with rerank minus hybrid +0.313 [+0.160, +0.478]; rerank minus bm25 +0.393 [+0.200, +0.595];  rerank minus dense +0.338 [+0.150, +0.533]).
-Not distinguishable is hybrid minus bm25 +0.080 [-0.099, +0.267].
+MRR@10 is distinguishable from zero for rerank minus hybrid +0.279 [+0.128, +0.443] and rerank minus bm25 +0.243 [+0.010, +0.476].
+Not distinguishable is rerank minus dense +0.188 [-0.017, +0.392], hybrid minus bm25 -0.037 [-0.178, +0.083] and hybrid minus dense -0.092 [-0.306, +0.109].
 The minimum detectable difference is roughly 0.19-0.41.
 Lecture 12's claim about how no retriever wins is supported by my numbers, ex. bm25 identifier recall 1.000, paraphrase 0.000; dense 0.214 and 0.595. One thing left open was whether hybrid beats either input, since those intervals include zero.
 
@@ -166,7 +166,7 @@ What is it, where did it come from, how many documents and how many megabytes, a
 Name the one or two documents you were least sure about and what you decided.
 Say which of the allowed sources in the brief it comes from.
 
-Corpus is from the rust compiler documentation (rustc-dev-guide, rustc book, rustdoc book, style guide, from rust-lang/rust) from commit 41089d07a0a2afc16adfe28a760d94d73d7298a4 fetched with `scripts/fetch_rust_docs.py`. It is a 424 document corpus which is roughly 2.6 MB. The set has a median of 520 words, which is 69% larger than one chunk. The license and repo licence is MIT/Apache 2.0. We removed some licensing that was unknown.  
+Corpus is from the rust compiler documentation (rustc-dev-guide, rustc book, rustdoc book, style guide, from rust-lang/rust) from commit 41089d07a0a2afc16adfe28a760d94d73d7298a4 fetched with `scripts/fetch_rust_docs.py`. It is a 424 document corpus which is roughly 2.6 MB. The set has a median of 520 words, and 69% of the documents (292) are longer than one 300-word chunk. The license and repo licence is MIT/Apache 2.0. We removed one document whose console example reproduced a third-party simulator's "all rights reserved" banner (rustc_platform-support_sparc-unknown-none-elf) and 13 stubs under 50 words, before any judgment.  
 
 ### The gold set
 
@@ -175,7 +175,7 @@ How did you decide that a document is relevant: write your relevance rule in two
 How did you find candidates (the systems' top 10, a keyword search, reading), and did you read every document before you labeled it?
 Your labels are binary (`rel` 1) unless you say otherwise: if you use graded labels, declare the scale here, for example 2 means the document answers the query fully and 1 means it helps.
 
-The set is 30 queries, 10 hand picked and 20 claude picked. there is 10 identifiers, 11 paraphrases, and 9 mixed. The rule was that the document must have either examples of the requested item, or the document's behavior is related to the requested item's behavior. We excluded files that were 0 lines long. The candidates wer echosen from a union of bm25, dense, and hybrid top 10 using `scripts/candidates.py`, keyword grep, and the page each draft was written from. three draft source pages (c11-13) were in no system's top 10.
+The set is 50 queries, 10 hand written and 40 claude drafted. there is 17 identifiers, 18 paraphrases, and 15 mixed. The rule was that the document must have either examples of the requested item, or the document's behavior is related to the requested item's behavior. We excluded candidate pages with 0 lines about the query. The candidates wer echosen from a union of bm25, dense, and hybrid top 10 using `scripts/candidates.py`, keyword grep, and the page each draft was written from. nine draft source pages (c08, c09, c11, c12, c13, c28, c29, c30, c33) were in no system's top 10.
 
 ---
 
@@ -297,9 +297,9 @@ Which differences are distinguishable and which are not, at your gold-set size?
 Do the `hand` queries and the `claude` queries tell the same story?
 Did your prediction in `DECISIONS.md` prompt 1 hold?
 
-Whats distinguishable is hybrid minus bm25 +0.101 [+0.026, +0.196] and rerank minus bm25 +0.132 [+0.039, +0.243].
-Whats not distinguishable is rerank minus hybrid +0.032 [-0.026, +0.106], MDD 0.098; rerank minus dense +0.078 [-0.002, +0.172].
-Hand queries were ranked higher on every system, while claude queries performed lower, there was a recall cap of +0.18 to +0.22. My prediction was that rerank would perform the worse, but it was indistinguishable in performance to hybrid (one of the best systems).
+Whats distinguishable is hybrid minus bm25 +0.065 [+0.018, +0.124], hybrid minus dense +0.052 [+0.002, +0.108], rerank minus bm25 +0.125 [+0.050, +0.212] and rerank minus dense +0.111 [+0.037, +0.195].
+Whats not distinguishable is rerank minus hybrid +0.060 [+0.000, +0.130], MDD 0.094, and dense minus bm25 +0.014 [-0.058, +0.086].
+Hand queries were ranked higher on every system, while claude queries performed lower, there was a recall gap of +0.22 to +0.26 (hybrid +0.256 [+0.149, +0.364]). My prediction was that rerank would perform the worse, but it was indistinguishable in performance to hybrid (one of the best systems).
 
 ---
 
@@ -356,7 +356,6 @@ Read the queries at the top of each list in the second table, and say whether yo
 
 I expect that dense_prefix will have no change in dense's MRR@10 since the 40 drafts are full sentences and my chunks are 300 word passages, the prefix was designed for short queries, so the effect would be too small for the 50 queries to see. MDD for a dense vs dense pair will be small.
 
-After running it, the result was +0.007 k=10 - k=60, so based on this, the k value on this corpus does not matter. In the shared corpus that was split by class, the systems had some disagreeances, but in this corpus, the two systems mostly agree (28/30 queries identical).
 
 ---
 
@@ -385,7 +384,7 @@ Did the winner change between the shared corpus and yours?
 Why, or why not: what is different about the two collections (document length, vocabulary, identifiers, near-duplicates, how the queries were written), and which of your explanations did you test and which are guesses?
 Say what 20 queries on one side and your gold-set size on the other cannot support.
 
-The winner by MRR was rerank on both, but the gap between the two is different, on the shared corpus its +0.313, on my corpus its +0.032. The difference is likely the page length being so different, with the shared corpus having a median length of 62 while my corpus has 520.
+The winner by MRR was rerank on both, but the gap between the two is different, on the shared corpus its +0.279 [+0.128, +0.443], on my corpus its +0.060 [+0.000, +0.130]. More differences showed in 13% vs 69% multichunk, bm25 paraphrase recall being 0.000 vs 0.479, and the reranker passage is a section in the shared, but just an introduction in my corpus. The total tokens were 12943 in the shared vs the 16831 in my corpus. The difference is likely the page length being so different, with the shared corpus having a median length of 68 while my corpus has 520.
 
 ---
 
@@ -400,7 +399,6 @@ Whichever option you chose, write these five things:
 1. The option's name.
 rider
 2. What you did, and the files that hold it.
-files: 
 3. The table `p2 score` wrote for it, by name: one of the three below, `own-ablation` and `own-ablation-queries` in section 5 for a second ablation, `own-origins` in section 4 for the hand and claude queries, or `repeats` in section 9 for the rider.
 4. What its interval lets you claim, and what it does not.
 5. One thing you would do next, and what result would tell you it worked.
@@ -531,7 +529,7 @@ Each repeat answers the same questions, so the repeats are not independent trial
 Does the reranker's gain over its first stage survive the run-to-run variation?
 Write what the spread is, how it compares with the gain, and what the Wilson intervals on the verified share and the declined share say about 8 and 4 questions.
 
-598E: write the repeats result here.
+Three runs resulted in MRR 0.750, 0.750, 0.750, with a range of 0.000 and the nDCG range 0.004. Each run minus hybrid's interval was +0.279 [+0.128, +0.443]. The Gain was 0.279 against a spread of 0.000. The runs got 8 of 8 answers and 4 of 4 all three times; Wilson intervals were [0.676, 1.000] and [0.510, 1.000]. In the 4 of 4 only shows the decline rate is above 0.51.
 
 ### The pre-registered claim
 
@@ -539,4 +537,4 @@ The claim, the smallest effect, the gold-set size and the test are in `PREREG.md
 Here, say whether you followed the plan, what the interval turned out to be, and what that means.
 The outcome section of `PREREG.md` holds the short version.
 
-598E: write the claim and its outcome here.
+Followed PREREG (a4d257c) except 50 queries not 55 and hybrid's k changed after registration. hybrid minus dense was +0.052 [+0.002, +0.108], MDD 0.077 which is under Δ 0.15. The k=10 runs had given +0.044 [-0.005, +0.101], which is below the delta threshold. The takeaway was that adding bm25 to dense helps first rank quality by a small amount and the predicted harm did not appear.
