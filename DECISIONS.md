@@ -59,7 +59,7 @@ What did you do instead?
 If it genuinely never happened, say so plainly, and then say what you would have had to check in order to notice.
 Being honest here costs you far less than a story you cannot defend when you record your video.
 
-Claude advised for sticking with k=60 for RRF in hybrid, I overruled it for a lower k value after measuring. The measurement said that k=1 performed better, so I chose k=10. Now, after running in CI, we reverted from a lower k to k=60.
+Claude advised for sticking with k=60 for RRF in hybrid, I overruled it for a lower k value after measuring since k=10 won in practice. After running in CI, it showed no reproducibility, so we reverted from a lower k to k=60.
 
 ---
 

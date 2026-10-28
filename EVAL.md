@@ -142,7 +142,7 @@ Then read three in-corpus answers that `uv run p2 verify` passed.
 For each one, open the cited chunk and say whether the quote really supports the claim next to it.
 The check proves a quote is a real piece of the chunk and cannot prove that it supports the claim, so this reading is the part only you can do.
 
-The system answered was rerank because its the only one with a visible win over its firsts stage. the prompts/answer.txt was unchanged. the verified/declined share stayed the same.
+The system answered was rerank because its the only one with a visible win over its firsts stage. the prompts/answer.txt was unchanged. chunk ids a01 cfr30-50.10#0, a02 cfr30-75.403#0, a05 cfr30-48.5#0.
 
 a01: 'Within how many minutes must a mine operator call MSHA after an accident that kills a miner?' \\
 Source: 'The operator shall immediately contact MSHA at once without delay and within 15 minutes at the toll-free number, 1-800-746-1553, once the operator knows or should know that an accident has occurred involving:' \\
@@ -166,7 +166,7 @@ What is it, where did it come from, how many documents and how many megabytes, a
 Name the one or two documents you were least sure about and what you decided.
 Say which of the allowed sources in the brief it comes from.
 
-Corpus is from the rust compiler documentation (rustc-dev-guide, rustc book, rustdoc book, style guide, from rust-lang/rust) from commit 41089d07a0a2afc16adfe28a760d94d73d7298a4 fetched with `scripts/fetch_rust_docs.py`. It is a 424 document corpus which is roughly 2.6 MB. The set has a median of 520 words, and 69% of the documents (292) are longer than one 300-word chunk. The license and repo licence is MIT/Apache 2.0. We removed one document whose console example reproduced a third-party simulator's "all rights reserved" banner (rustc_platform-support_sparc-unknown-none-elf) and 13 stubs under 50 words, before any judgment.  
+Corpus is from the rust compiler documentation (rustc-dev-guide, rustc book, rustdoc book, style guide, from rust-lang/rust) from commit 41089d07a0a2afc16adfe28a760d94d73d7298a4 fetched with `scripts/fetch_rust_docs.py`. It is a 424 document corpus which is roughly 2.6 MB. The set has a median of 520 words, and 69% of the documents (292) are longer than one 300-word chunk. The license and repo licence is MIT/Apache 2.0 ("Rust is primarily distributed under the terms of both the MIT license and the Apache License (Version 2.0)"). We removed one document whose console example reproduced a third-party simulator's "all rights reserved" banner (rustc_platform-support_sparc-unknown-none-elf) and 13 stubs under 50 words, before any judgment.  
 
 ### The gold set
 
@@ -356,6 +356,7 @@ Read the queries at the top of each list in the second table, and say whether yo
 
 I expect that dense_prefix will have no change in dense's MRR@10 since the 40 drafts are full sentences and my chunks are 300 word passages, the prefix was designed for short queries, so the effect would be too small for the 50 queries to see. MDD for a dense vs dense pair will be small.
 
+The results from this were that the MRR@10's interval got -0.007 [-0.040, +0.027], with MDD 0.047. This helped 5 queries and hurt 5 queries.
 
 ---
 
@@ -367,11 +368,11 @@ Then sort the failures by cause, for example a vocabulary mismatch, near-duplica
 
 | qid | what the best system returned | what was relevant | cause | what you would try |
 |---|---|---|---|---|
-|c12|rustc_jobserver|rank 41, RR0|idk|idk|
-|c11|rustc_remap-source-paths|rank below 50|idk|idk|
-|c08|two-phase-borrows|rank below 50 despite example|idk|idk|
-|c09|pr_lifecycle|missing tests_crater|idk|idk|
-|h03|rustdoc_unstable-features|hybrid 2, rerank 10, 5280 words|idk|idk|
+|c12|rustc_jobserver|rank 41, RR0|vocabulary mismatch|Expanding the query|
+|c11|rustc_remap-source-paths|rank below 50|vocabulary mismatch|Expanding the query|
+|c08|two-phase-borrows|rank below 50 despite example|vocabulary mismatch|Expanding the query|
+|c09|pr_lifecycle|missing tests_crater|label too wide|narrower rule for label|
+|h03|rustdoc_unstable-features|hybrid 2, rerank 10, 5280 words|reranker only sall first 300 words|find best chunk passage for the reranker|
 
 ---
 
