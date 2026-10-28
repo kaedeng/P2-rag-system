@@ -93,7 +93,7 @@ Which row of the table in section 4 is it?
 Did your gold set reach the size section 3 asked for, and what was the minimum detectable difference that `uv run p2 score` printed?
 What would you do next, and what would you want a reader to take from this?
 
-TODO: your outcome.
+The interval was +0.0444 [-0.005, +0.101] for hybrid minus dense in MRR@10. the row is around zero, both ends within the 0.15 delta. The size was 50 queries instead of the 55 planned, which was still above the 48 from the formula. MDD was 0.077 which was also below delta. The next steps would be to test a narrower relevance rule on the same test because under the strongest label only rule, the hybrid interval moved to 0.640 and dense to 0.509. A reader would take away that on longer technical pages, adding bm25 to dense does not change which page comes first by more than the delta, and the predicion was in the wrong direction, though not conclusive enough due to the delta.
 
 ---
 
@@ -104,3 +104,6 @@ Leave this section as it is if nothing changed.
 
 2026-10-27: Order was changed, 30 queries judged on 0c8c22f under 498E, changed to 598E at f43f2e5. Prereg was written after those scores were known.
 Plan: 20 drafted plus any hand queries judged after this PREREG commit, commit to be added in a second dated entry.
+
+2026-10-27: second block of 20 drafted queries and judgments committed at
+59078bb; rerun and scored at 83b75ac. no extra hand queries, so 50 queries instead of 55. Sections 1 to 4 unchanged.
